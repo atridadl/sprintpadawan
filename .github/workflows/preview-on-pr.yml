@@ -1,0 +1,29 @@
+name: Deploy to Firebase Hosting on PR
+'on': pull_request
+jobs:
+  deploy_preview:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGEING_SENDER_ID: secrets.VITE_FIREBASE_MESSAGEING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+      VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: w9jds/setup-firebase@main
+        with:
+          tools-version: 11.18.0
+          gcp_sa_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPRINTPADAWAN }}
+          project_id: sprintpadawan
+      - name: Install and Build
+        run: yarn install && yarn build
+      - name: Deploy to Preview Channel
+        run: firebase hosting:channel:deploy ${{ github.head_ref || github.ref_name }}
