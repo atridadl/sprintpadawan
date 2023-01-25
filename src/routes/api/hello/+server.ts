@@ -1,6 +1,7 @@
-import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import prisma from '$lib/prisma';
 
-export const GET = (({ url }) => {
-	return new Response(String('Hello world!'));
+export const GET = (async ({ url }) => {
+	const users = await prisma.user.findMany();
+	return new Response(String(JSON.stringify(users)));
 }) satisfies RequestHandler;

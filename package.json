@@ -11,7 +11,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"prisma": "prisma"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -40,5 +41,8 @@
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
-	"dependencies": {}
+	"dependencies": {
+		"@prisma/client": "^4.9.0",
+		"prisma": "^4.9.0"
+	}
 }
