@@ -1,24 +1,25 @@
-import adapter from '@sveltejs/adapter-auto';
-import preprocess from "svelte-preprocess";
+import adapter from '@sveltejs/adapter-vercel';
+import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			edge: true
+		})
 	},
 	preprocess: [
 		preprocess({
-			postcss: true,
-		}),
+			postcss: true
+		})
 	],
 	vitePlugin: {
 		experimental: {
 			inspector: {
-				holdMode: true,
+				holdMode: true
 			}
 		}
-	}		
-
+	}
 };
 
 export default config;
