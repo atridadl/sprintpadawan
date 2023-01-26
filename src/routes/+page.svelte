@@ -1,5 +1,4 @@
 <script lang="ts">
-	import prisma from '$lib/prisma';
 	import type { User } from '@prisma/client';
 	import { onMount } from 'svelte';
 
