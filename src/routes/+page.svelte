@@ -1,12 +1,9 @@
 <script lang="ts">
-	import type { User } from '@prisma/client';
-	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
-	let users: User[] | undefined;
-	onMount(async () => {
-		const response = await fetch('/api/hello');
-		users = await response.json();
-	});
+	export let data: PageData;
+
+	$: users = data.data;
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
