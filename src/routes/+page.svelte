@@ -9,11 +9,10 @@
 
 	$: users = data.data;
 
-	const ably = new Ably.Realtime.Promise(PUBLIC_ABLY_KEY);
-
-	const channel = ably.channels.get('sprintpadawan');
-
 	onMount(async () => {
+		const ably = new Ably.Realtime.Promise(PUBLIC_ABLY_KEY);
+		const channel = ably.channels.get('sprintpadawan');
+
 		await channel.subscribe('event', (message) => {
 			console.log('Event Received: ' + message.data);
 
@@ -29,6 +28,8 @@
 	});
 
 	onDestroy(() => {
+		const ably = new Ably.Realtime.Promise(PUBLIC_ABLY_KEY);
+
 		ably.close();
 	});
 
