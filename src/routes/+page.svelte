@@ -1,42 +1,24 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import * as Ably from 'ably';
-	import { PUBLIC_ABLY_KEY } from '$env/static/public';
-	import { invalidateAll } from '$app/navigation';
+	import { pusher, unsubFromPusher } from '$lib/pusher';
 
 	export let data: PageData;
 
 	$: users = data.data;
 
 	onMount(async () => {
-		const ably = new Ably.Realtime.Promise(PUBLIC_ABLY_KEY);
-		const channel = ably.channels.get('sprintpadawan');
-
-		await channel.subscribe('event', (message) => {
-			console.log('Event Received: ' + message.data);
-
-			switch (message.data) {
-				case 'DB_FETCH':
-					invalidateAll();
-					break;
-
-				default:
-					break;
-			}
+		const channel = pusher.subscribe('sprintpadawan');
+		channel.bind('event', function (data: any) {
+			console.log(data);
 		});
 	});
 
 	onDestroy(() => {
-		const ably = new Ably.Realtime.Promise(PUBLIC_ABLY_KEY);
-
-		ably.close();
+		unsubFromPusher('sprintpadawan');
 	});
 
-	const postMessage = async () => {
-		const channel = ably.channels.get('sprintpadawan');
-		await channel.publish('event', 'DB_FETCH');
-	};
+	// const postMessage = async () => {};
 </script>
 
 <div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
@@ -47,10 +29,6 @@
 				<br />
 			{/each}
 		{/if}
-	</div>
-
-	<div>
-		<button class="btn variant-filled-primary btn-base" on:click={postMessage}>Event Fire</button>
 	</div>
 </div>
 

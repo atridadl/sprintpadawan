@@ -42,7 +42,7 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^4.9.0",
-		"ably": "^1.2.34",
-		"prisma": "^4.9.0"
+		"prisma": "^4.9.0",
+		"pusher-js": "^8.0.1"
 	}
 }
