@@ -2,8 +2,8 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
 	const response = await fetch('/api/hello');
-	const data = await response.json();
+	const data = async () => await response.json();
 	return {
-		data
+		data: data()
 	};
 }) satisfies PageServerLoad;
