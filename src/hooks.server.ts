@@ -4,6 +4,7 @@ import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import prisma from '$lib/server/prisma';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 async function authorization({ event, resolve }: any) {
 	// Protect any routes under /authenticated
@@ -27,20 +28,7 @@ async function authorization({ event, resolve }: any) {
 export const handle: Handle = sequence(
 	SvelteKitAuth({
 		providers: [GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET })],
-		callbacks: {
-			async signIn({ user, account, profile, email, credentials }) {
-				const newUser = await prisma.user.upsert({
-					where: {
-						email: profile?.email
-					},
-					update: user,
-					create: user
-				});
-				console.log('Incoming User: ', user);
-				console.log('New User Written: ', newUser);
-				return true;
-			}
-		}
+		adapter: PrismaAdapter(prisma)
 	}),
 	authorization
 );
