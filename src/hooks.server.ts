@@ -30,11 +30,11 @@ export const handle: Handle = sequence(
 		callbacks: {
 			async signIn({ user, account, profile, email, credentials }) {
 				const newUser = await prisma.user.upsert({
-                                        where: {
-    email,
-  },
-  update: user,
-  create: user
+					where: {
+						email: profile?.email
+					},
+					update: user,
+					create: user
 				});
 				console.log('Incoming User: ', user);
 				console.log('New User Written: ', newUser);
