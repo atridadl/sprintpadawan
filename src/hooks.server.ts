@@ -29,7 +29,7 @@ export const handle: Handle = sequence(
 		providers: [GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET })],
 		callbacks: {
 			async signIn({ user, account, profile, email, credentials }) {
-				const newUser = await prisma.user.create({
+				const newUser = await prisma.user.upsert({
 					data: user
 				});
 				console.log('Incoming User: ', user);
