@@ -2,7 +2,13 @@
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
+	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { page } from '$app/stores';
+
+	const debug = () => {
+		console.log($page.data.session);
+	};
 </script>
 
 <!-- App Shell -->
@@ -14,24 +20,12 @@
 				<strong class="text-xl uppercase">Skeleton</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<a
-					class="btn btn-sm btn-ghost-surface"
-					href="https://discord.gg/EXqV7W8MtY"
-					target="_blank"
-					rel="noreferrer">Discord</a
-				>
-				<a
-					class="btn btn-sm btn-ghost-surface"
-					href="https://twitter.com/SkeletonUI"
-					target="_blank"
-					rel="noreferrer">Twitter</a
-				>
-				<a
-					class="btn btn-sm btn-ghost-surface"
-					href="https://github.com/skeletonlabs/skeleton"
-					target="_blank"
-					rel="noreferrer">GitHub</a
-				>
+				{#if $page.data.session}
+					<button on:click={signOut}>Logout</button>
+					<Avatar src={$page.data.session.user?.image || ''} />
+				{:else}
+					<button on:click={signIn}>Login</button>
+				{/if}
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
