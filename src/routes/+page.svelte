@@ -8,13 +8,15 @@
 	$: session = data.session;
 
 	onMount(async () => {
+		const { pusher } = await import('$lib/pusher');
 		const channel = pusher.subscribe('sprintpadawan');
 		channel.bind('event', function (data: any) {
 			console.log(data);
 		});
 	});
 
-	onDestroy(() => {
+	onDestroy(async () => {
+		const { unsubFromPusher } = await import('$lib/pusher');
 		unsubFromPusher('sprintpadawan');
 	});
 
