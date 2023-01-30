@@ -1,8 +1,9 @@
 declare global {
-	var prisma: PrismaClient; // This must be a `var` and not a `let / const`
+	var prisma: PrismaClient;
 }
 
 import { PrismaClient } from '@prisma/client';
+import { PrismaClient as PrismaClientEdge } from '@prisma/client/edge';
 let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
@@ -14,4 +15,6 @@ if (process.env.NODE_ENV === 'production') {
 	prisma = global.prisma;
 }
 
-export default prisma;
+const prismaEdge: PrismaClient = new PrismaClientEdge();
+
+export { prisma, prismaEdge };

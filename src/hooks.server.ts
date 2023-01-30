@@ -3,7 +3,7 @@ import GitHub from '@auth/core/providers/github';
 import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import prisma from '$lib/server/prisma';
+import { prismaEdge } from '$lib/server/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 async function authorization({ event, resolve }: any) {
