@@ -8,7 +8,7 @@ let cookieName =
 		: 'next-auth.session-token';
 
 export const POST = (async ({ cookies }) => {
-	const currentCookie = cookies.get('next-auth.session-token');
+	const currentCookie = cookies.get(cookieName);
 	const session = await prisma.session.findUnique({
 		where: {
 			sessionToken: currentCookie
