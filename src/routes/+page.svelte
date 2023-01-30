@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { pusher, unsubFromPusher } from '$lib/pusher';
 
 	export let data: PageData;
 
