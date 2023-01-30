@@ -21,7 +21,11 @@
 		unsubFromPusher('sprintpadawan');
 	});
 
-	// const postMessage = async () => {};
+	const createRoom = async () => {
+		await fetch('/api/room', {
+			method: 'POST'
+		});
+	};
 </script>
 
 <div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
@@ -37,9 +41,7 @@
 			</label>
 
 			<h3>Create a new room!</h3>
-			<form action="/api/room" method="POST">
-				<button class="btn variant-filled-primary btn-base"> New Room </button>
-			</form>
+			<button class="btn variant-filled-primary btn-base" on:click={createRoom}> New Room </button>
 		{:else}
 			<h3>Please sign in above using your GitHub account!</h3>
 		{/if}
