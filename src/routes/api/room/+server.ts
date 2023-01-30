@@ -2,6 +2,11 @@ import type { RequestHandler } from './$types';
 import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
 
+let cookieName =
+	process.env.NODE_ENV === 'production'
+		? '__Secure-next-auth.session-token'
+		: 'next-auth.session-token';
+
 export const POST = (async ({ cookies }) => {
 	const currentCookie = cookies.get('next-auth.session-token');
 	const session = await prisma.session.findUnique({
