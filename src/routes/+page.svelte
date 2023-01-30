@@ -5,7 +5,7 @@
 
 	export let data: PageData;
 
-	$: users = data.data;
+	$: session = data.session;
 
 	onMount(async () => {
 		const channel = pusher.subscribe('sprintpadawan');
@@ -23,11 +23,10 @@
 
 <div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
 	<div>
-		{#if users}
-			{#each users as user}
-				{user.name}
-				<br />
-			{/each}
+		{#if session}
+			Hi, {session.user?.name}!
+		{:else}
+			Not Logged In!
 		{/if}
 	</div>
 </div>

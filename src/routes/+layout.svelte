@@ -5,10 +5,6 @@
 	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-
-	const debug = () => {
-		console.log($page.data.session);
-	};
 </script>
 
 <!-- App Shell -->

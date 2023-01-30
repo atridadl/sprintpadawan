@@ -1,10 +1,7 @@
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ fetch }) => {
-	const response = await fetch('/api/hello');
-	const data = await response.json();
-
+export const load: PageServerLoad = (async ({ fetch, locals }) => {
 	return {
-		data
+		session: await locals.getSession()
 	};
 }) satisfies PageServerLoad;
