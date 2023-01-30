@@ -4,7 +4,7 @@ import preprocess from 'svelte-preprocess';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter({ edge: true })
+		adapter: adapter({ edge: false })
 	},
 	preprocess: [
 		preprocess({
