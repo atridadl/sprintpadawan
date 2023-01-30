@@ -1,0 +1,21 @@
+import type { RequestHandler } from './$types';
+import prisma from '$lib/server/prisma';
+import { error } from '@sveltejs/kit';
+
+export const POST = (async ({ cookies }) => {
+	const currentCookie = cookies.get('next-auth.session-token');
+	const session = await prisma.session.findUnique({
+		where: {
+			sessionToken: currentCookie
+		}
+	});
+	if (session) {
+		const room = await prisma.room.create({
+			data: {
+				userId: session.userId
+			}
+		});
+		return new Response(String(JSON.stringify(room)));
+	}
+	throw error(403, 'Not signed in!');
+}) satisfies RequestHandler;

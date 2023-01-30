@@ -7,7 +7,6 @@ import prisma from '$lib/server/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 async function authorization({ event, resolve }: any) {
-	// Protect any routes under /authenticated
 	if (event.url.pathname.startsWith('/authenticated')) {
 		const session = await event.locals.getSession();
 		if (!session) {
@@ -28,9 +27,7 @@ async function authorization({ event, resolve }: any) {
 export const handle: Handle = sequence(
 	SvelteKitAuth({
 		providers: [GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET })],
-		adapter: PrismaAdapter(prisma),
-		trustHost: true,
-		secret: 'secret'
+		adapter: PrismaAdapter(prisma)
 	}),
 	authorization
 );

@@ -13,12 +13,12 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Skeleton</strong>
+				<strong class="text-xl uppercase">SprintPadawan</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				{#if $page.data.session}
 					<button on:click={signOut}>Logout</button>
-					<Avatar src={$page.data.session.user?.image || ''} />
+					<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
 				{:else}
 					<button on:click={signIn}>Login</button>
 				{/if}
@@ -27,4 +27,10 @@
 	</svelte:fragment>
 	<!-- Page Route Content -->
 	<slot />
+	<svelte:fragment slot="footer">
+		<div class="text-center m-auto">
+			Built by <a href="https://atridad.dev">Atridad Lahiji</a> using SvelteKit + Vercel + Planetscale
+			+ Pusher
+		</div>
+	</svelte:fragment>
 </AppShell>
