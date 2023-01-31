@@ -1,14 +1,11 @@
 import type { PageServerLoad } from './$types';
-import prisma from '$lib/server/prisma';
 import type { ExtendedSession } from '../types';
+import type { Room } from '@prisma/client';
 
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
-	const session = (await locals.getSession()) as ExtendedSession;
-	const rooms = await prisma.room.findMany({
-		where: {
-			userId: session?.user.id!
-		}
-	});
+	const session: ExtendedSession = (await locals.getSession()) as ExtendedSession;
+	const roomsResponse: Response = await fetch('/api/room');
+	const rooms: Room[] = await roomsResponse.json();
 
 	return {
 		session,

@@ -8,6 +8,24 @@ let cookieName =
 		? '__Secure-next-auth.session-token'
 		: 'next-auth.session-token';
 
+export const GET = (async ({ cookies }) => {
+	const currentCookie = cookies.get(cookieName);
+	const session = await prisma.session.findUnique({
+		where: {
+			sessionToken: currentCookie
+		}
+	});
+	if (session) {
+		const room = await prisma.room.findMany({
+			where: {
+				userId: session.userId
+			}
+		});
+		return new Response(String(JSON.stringify(room)));
+	}
+	throw error(403, 'Not signed in!');
+}) satisfies RequestHandler;
+
 export const POST = (async ({ cookies }) => {
 	const currentCookie = cookies.get(cookieName);
 	const session = await prisma.session.findUnique({
