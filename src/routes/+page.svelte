@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		const { subscribeToChannel } = await import('$lib/ably.client');
-		subscribeToChannel('sprintpadawan', 'event', invalidateAll);
+		subscribeToChannel(session.user.id!, 'event', invalidateAll);
 	});
 
 	onDestroy(async () => {

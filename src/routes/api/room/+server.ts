@@ -22,7 +22,7 @@ export const POST = (async ({ cookies }) => {
 			}
 		});
 		if (room) {
-			writeToChannel('sprintpadawan', 'event', 'DB_UPDATE');
+			writeToChannel(session.userId, 'event', 'DB_UPDATE');
 		}
 		return new Response(String(JSON.stringify(room)));
 	}
@@ -49,10 +49,8 @@ export const DELETE = (async ({ cookies, request }) => {
 			}
 		});
 
-		console.log(deletedRoom);
-
 		if (deletedRoom) {
-			writeToChannel('sprintpadawan', 'event', 'DB_UPDATE');
+			writeToChannel(session.userId, 'event', 'DB_UPDATE');
 		}
 
 		return new Response(String(JSON.stringify({})));
