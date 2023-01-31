@@ -86,6 +86,7 @@
 				</div>
 			{/if}
 		{:else}
+			<img class="my-4 mx-auto" width="200px" src="/logo.webp" alt="Logo for Sprint Padawan" />
 			<h1 class="my-4">
 				<span class="text-pink-600 hover:drop-shadow-lg">Plan.</span>
 				<span class="text-purple-600 hover:drop-shadow-lg">Sprint.</span>
