@@ -14,6 +14,7 @@
 		const { pusher } = await import('$lib/pusher.client');
 		const channel = pusher.subscribe('sprintpadawan');
 		channel.bind('event', function (data: any) {
+			console.log(data);
 			if (data.message === 'DB_UPDATE') {
 				invalidateAll();
 			}
