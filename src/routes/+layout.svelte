@@ -7,6 +7,11 @@
 	import { page } from '$app/stores';
 </script>
 
+<svelte:head>
+	<title>SprintPadawan</title>
+	<meta name="description" content="Scrum Planning Toolkit" />
+</svelte:head>
+
 <AppShell slotSidebarLeft="bg-surface-500/5 w-56 p-4">
 	<svelte:fragment slot="header">
 		<AppBar>
