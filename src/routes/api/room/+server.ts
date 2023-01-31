@@ -2,23 +2,15 @@ import type { RequestHandler } from './$types';
 import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
 import { writeToChannel } from '$lib/server/ably.server';
+import type { ExtendedSession } from '../../../types';
 
-let cookieName =
-	process.env.NODE_ENV === 'production'
-		? '__Secure-next-auth.session-token'
-		: 'next-auth.session-token';
+export const GET = (async ({ locals }) => {
+	const session = (await locals.getSession()) as ExtendedSession;
 
-export const GET = (async ({ cookies }) => {
-	const currentCookie = cookies.get(cookieName);
-	const session = await prisma.session.findUnique({
-		where: {
-			sessionToken: currentCookie
-		}
-	});
 	if (session) {
 		const room = await prisma.room.findMany({
 			where: {
-				userId: session.userId
+				userId: session.user.id!
 			}
 		});
 		return new Response(String(JSON.stringify(room)));
@@ -26,34 +18,26 @@ export const GET = (async ({ cookies }) => {
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;
 
-export const POST = (async ({ cookies }) => {
-	const currentCookie = cookies.get(cookieName);
-	const session = await prisma.session.findUnique({
-		where: {
-			sessionToken: currentCookie
-		}
-	});
+export const POST = (async ({ locals }) => {
+	const session = (await locals.getSession()) as ExtendedSession;
+
 	if (session) {
 		const room = await prisma.room.create({
 			data: {
-				userId: session.userId
+				userId: session.user.id!
 			}
 		});
 		if (room) {
-			writeToChannel(session.userId, 'event', 'DB_UPDATE');
+			writeToChannel(session.user.id!, 'event', 'DB_UPDATE');
 		}
 		return new Response(String(JSON.stringify(room)));
 	}
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;
 
-export const DELETE = (async ({ cookies, request }) => {
-	const currentCookie = cookies.get(cookieName);
-	const session = await prisma.session.findUnique({
-		where: {
-			sessionToken: currentCookie
-		}
-	});
+export const DELETE = (async ({ locals, request }) => {
+	const session = (await locals.getSession()) as ExtendedSession;
+
 	if (session) {
 		const body = await request.json();
 
@@ -68,7 +52,7 @@ export const DELETE = (async ({ cookies, request }) => {
 		});
 
 		if (deletedRoom) {
-			writeToChannel(session.userId, 'event', 'DB_UPDATE');
+			writeToChannel(session.user.id!, 'event', 'DB_UPDATE');
 		}
 
 		return new Response(String(JSON.stringify({})));
