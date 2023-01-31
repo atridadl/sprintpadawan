@@ -3,9 +3,13 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
-	import { subscribeToChannel, unsubscribe } from '$lib/ably.client';
 
 	export let data: PageData;
+
+	const subscribeToRooms = async () => {
+		const { subscribeToChannel } = await import('$lib/ably.client');
+		subscribeToChannel(session.user.id!, 'event', invalidateAll);
+	};
 
 	const createRoom = async () => {
 		await fetch('/api/room', {
@@ -32,11 +36,12 @@
 
 	onMount(async () => {
 		if (session) {
-			subscribeToChannel(session.user.id!, 'event', invalidateAll);
+			subscribeToRooms();
 		}
 	});
 
 	onDestroy(async () => {
+		const { unsubscribe } = await import('$lib/ably.client');
 		unsubscribe();
 	});
 </script>
