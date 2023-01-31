@@ -55,7 +55,7 @@ model VerificationToken {
 }
 
 model Room {
-  id String @id @default(cuid())
+  id String @id @default(cuid()) @unique
   userId String
   owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -10,8 +10,6 @@ export const load: PageServerLoad = (async ({ fetch, locals }) => {
 		}
 	});
 
-	console.log(rooms);
-
 	return {
 		session,
 		rooms

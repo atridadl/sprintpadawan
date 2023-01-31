@@ -2,6 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import Icon from '@iconify/svelte';
 
 	export let data: PageData;
 
@@ -13,13 +14,6 @@
 	onMount(async () => {
 		const { subscribeToChannel } = await import('$lib/ably.client');
 		subscribeToChannel('sprintpadawan', 'event', invalidateAll);
-		// const channel = pusher.subscribe('sprintpadawan');
-		// channel.bind('event', function (data: any) {
-		// 	console.log(data);
-		// 	if (data.message === 'DB_UPDATE') {
-		// 		invalidateAll();
-		// 	}
-		// });
 	});
 
 	onDestroy(async () => {
@@ -30,6 +24,18 @@
 	const createRoom = async () => {
 		await fetch('/api/room', {
 			method: 'POST'
+		});
+	};
+
+	const deleteRoom = async (id: string) => {
+		await fetch('/api/room', {
+			method: 'DELETE',
+			body: JSON.stringify({
+				id
+			}),
+			headers: {
+				'content-type': 'application/json'
+			}
 		});
 	};
 </script>
@@ -49,22 +55,30 @@
 			<h3>Create a new room!</h3>
 			<button class="btn variant-filled-primary btn-base" on:click={createRoom}> New Room </button>
 
-			<div class="table-container mt-4">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Room ID</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each rooms as room}
+			{#if rooms.length > 0}
+				<div class="table-container mt-4">
+					<table class="table table-hover">
+						<thead>
 							<tr>
-								<td>{room.id}</td>
+								<th>Room ID</th>
+								<th>Actions</th>
 							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{#each rooms as room}
+								<tr>
+									<td>{room.id}</td>
+									<td>
+										<button on:click={() => deleteRoom(room.id)}>
+											<Icon icon="fa6-regular:trash-can" />
+										</button>
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
 		{:else}
 			<h3>Please sign in above using your GitHub account!</h3>
 		{/if}

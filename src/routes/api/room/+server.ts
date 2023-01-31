@@ -28,3 +28,34 @@ export const POST = (async ({ cookies }) => {
 	}
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;
+
+export const DELETE = (async ({ cookies, request }) => {
+	const currentCookie = cookies.get(cookieName);
+	const session = await prisma.session.findUnique({
+		where: {
+			sessionToken: currentCookie
+		}
+	});
+	if (session) {
+		const body = await request.json();
+
+		if (!body.id) {
+			throw error(400, 'Room ID not provided!');
+		}
+
+		const deletedRoom = await prisma.room.delete({
+			where: {
+				id: body.id
+			}
+		});
+
+		console.log(deletedRoom);
+
+		if (deletedRoom) {
+			writeToChannel('sprintpadawan', 'event', 'DB_UPDATE');
+		}
+
+		return new Response(String(JSON.stringify({})));
+	}
+	throw error(403, 'Not signed in!');
+}) satisfies RequestHandler;
