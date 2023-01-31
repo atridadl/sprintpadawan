@@ -46,6 +46,7 @@
 		"@auth/sveltekit": "^0.2.0",
 		"@next-auth/prisma-adapter": "^1.0.5",
 		"@prisma/client": "^4.9.0",
+		"ably": "^1.2.35",
 		"prisma": "^4.9.0",
 		"pusher": "^5.1.2",
 		"pusher-js": "^8.0.1"

@@ -11,19 +11,20 @@
 	let roomId = '';
 
 	onMount(async () => {
-		const { pusher } = await import('$lib/pusher.client');
-		const channel = pusher.subscribe('sprintpadawan');
-		channel.bind('event', function (data: any) {
-			console.log(data);
-			if (data.message === 'DB_UPDATE') {
-				invalidateAll();
-			}
-		});
+		const { subscribeToChannel } = await import('$lib/ably.client');
+		subscribeToChannel('sprintpadawan', 'event', invalidateAll);
+		// const channel = pusher.subscribe('sprintpadawan');
+		// channel.bind('event', function (data: any) {
+		// 	console.log(data);
+		// 	if (data.message === 'DB_UPDATE') {
+		// 		invalidateAll();
+		// 	}
+		// });
 	});
 
 	onDestroy(async () => {
-		const { unsubFromPusher } = await import('$lib/pusher.client');
-		unsubFromPusher('sprintpadawan');
+		const { unsubscribe } = await import('$lib/ably.client');
+		unsubscribe();
 	});
 
 	const createRoom = async () => {
