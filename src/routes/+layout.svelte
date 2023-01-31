@@ -30,7 +30,7 @@
 	<svelte:fragment slot="footer">
 		<div class="text-center m-auto">
 			Built by <a href="https://atridad.dev">Atridad Lahiji</a> using SvelteKit + Vercel + Planetscale
-			+ Pusher
+			+ Ably
 		</div>
 	</svelte:fragment>
 </AppShell>
