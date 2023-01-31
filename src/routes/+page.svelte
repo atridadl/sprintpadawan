@@ -86,7 +86,14 @@
 				</div>
 			{/if}
 		{:else}
-			<h3>Please sign in above using your GitHub account!</h3>
+			<h1 class="my-4">
+				<span class="text-pink-600 hover:drop-shadow-lg">Plan.</span>
+				<span class="text-purple-600 hover:drop-shadow-lg">Sprint.</span>
+				<span class="text-cyan-400 hover:drop-shadow-lg">Repeat.</span>
+			</h1>
+
+			<h2 class="my-4">Sprint Padawan helps agile teams do less planning and more building.</h2>
+			<h3 class="my-4">Please sign in above using your GitHub account!</h3>
 		{/if}
 	</div>
 </div>
