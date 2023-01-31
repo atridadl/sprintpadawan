@@ -5,6 +5,7 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import prisma from '$lib/server/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import type { ExtendedSession } from './types';
 
 async function authorization({ event, resolve }: any) {
 	if (event.url.pathname.startsWith('/authenticated')) {
@@ -27,7 +28,24 @@ async function authorization({ event, resolve }: any) {
 export const handle: Handle = sequence(
 	SvelteKitAuth({
 		providers: [GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET })],
-		adapter: PrismaAdapter(prisma)
+		adapter: PrismaAdapter(prisma),
+		callbacks: {
+			session({ session, token, user }) {
+				if (session?.user) {
+					const extendedSession: ExtendedSession = {
+						expires: session.expires,
+						user: {
+							id: user.id,
+							email: session.user.email,
+							image: session.user.image,
+							name: session.user.name
+						}
+					};
+					return extendedSession;
+				}
+				return session;
+			}
+		}
 	}),
 	authorization
 );

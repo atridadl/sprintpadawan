@@ -20,7 +20,7 @@
 					<button on:click={signOut}>Logout</button>
 					<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
 				{:else}
-					<button on:click={signIn}>Login</button>
+					<button on:click={() => signIn('github')}>Login</button>
 				{/if}
 			</svelte:fragment>
 		</AppBar>

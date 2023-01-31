@@ -1,6 +1,7 @@
 import type { RequestHandler } from './$types';
 import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
+import { pushToChannel } from '$lib/server/pusher.server';
 
 let cookieName =
 	process.env.NODE_ENV === 'production'
@@ -20,6 +21,9 @@ export const POST = (async ({ cookies }) => {
 				userId: session.userId
 			}
 		});
+		if (room) {
+			pushToChannel('sprintpadawan', 'event', 'DB_UPDATE');
+		}
 		return new Response(String(JSON.stringify(room)));
 	}
 	throw error(403, 'Not signed in!');
