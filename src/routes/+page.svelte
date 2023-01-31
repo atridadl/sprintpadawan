@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
@@ -8,6 +7,7 @@
 
 	const subscribeToRooms = async () => {
 		const { subscribeToChannel } = await import('$lib/ably.client');
+		const { invalidateAll } = await import('$app/navigation');
 		subscribeToChannel(session.user.id!, 'event', invalidateAll);
 	};
 
