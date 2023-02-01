@@ -34,7 +34,7 @@
 		if (session) {
 			const { subscribeToChannel } = await import('$lib/ably.client');
 			const { invalidateAll } = await import('$app/navigation');
-			subscribeToChannel(session.user.id!, 'event', invalidateAll);
+			subscribeToChannel(`${env}-${session.user.id!}`, 'event', invalidateAll);
 		}
 	});
 

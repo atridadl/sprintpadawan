@@ -3,6 +3,9 @@ import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
 import { writeToChannel } from '$lib/server/ably.server';
 import type { ExtendedSession } from '../../../types';
+import { VERCEL_ENV } from '$env/static/private';
+
+const env = VERCEL_ENV ? VERCEL_ENV : 'local';
 
 export const GET = (async ({ locals }) => {
 	const session = (await locals.getSession()) as ExtendedSession;
@@ -28,7 +31,7 @@ export const POST = (async ({ locals }) => {
 			}
 		});
 		if (room) {
-			writeToChannel(session.user.id!, 'event', 'DB_UPDATE');
+			writeToChannel(`${env}-${session.user.id!}`, 'event', 'DB_UPDATE');
 		}
 		return new Response(String(JSON.stringify(room)));
 	}
@@ -52,7 +55,7 @@ export const DELETE = (async ({ locals, request }) => {
 		});
 
 		if (deletedRoom) {
-			writeToChannel(session.user.id!, 'event', 'DB_UPDATE');
+			writeToChannel(`${env}-${session.user.id!}`, 'event', 'DB_UPDATE');
 		}
 
 		return new Response(String(JSON.stringify({})));
