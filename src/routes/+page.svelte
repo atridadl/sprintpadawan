@@ -5,12 +5,6 @@
 
 	export let data: PageData;
 
-	const subscribeToRooms = async () => {
-		const { subscribeToChannel } = await import('$lib/ably.client');
-		const { invalidateAll } = await import('$app/navigation');
-		subscribeToChannel(session.user.id!, 'event', invalidateAll);
-	};
-
 	const createRoom = async () => {
 		await fetch('/api/room', {
 			method: 'POST'
@@ -36,7 +30,9 @@
 
 	onMount(async () => {
 		if (session) {
-			subscribeToRooms();
+			const { subscribeToChannel } = await import('$lib/ably.client');
+			const { invalidateAll } = await import('$app/navigation');
+			subscribeToChannel(session.user.id!, 'event', invalidateAll);
 		}
 	});
 
