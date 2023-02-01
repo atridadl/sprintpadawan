@@ -29,6 +29,8 @@
 	let roomId = '';
 
 	onMount(async () => {
+		const env = process.env.VERCEL_ENV ? process.env.VERCEL_ENV : 'local';
+		console.log(env);
 		if (session) {
 			const { subscribeToChannel } = await import('$lib/ably.client');
 			const { invalidateAll } = await import('$app/navigation');
