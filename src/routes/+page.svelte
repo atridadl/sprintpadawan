@@ -113,7 +113,6 @@
 				on:click={() => signIn('github')}
 				class="btn variant-ghost-surface btn-base ring-2 ring-tertiary-500 ring-inset text-white"
 			>
-				<Icon class="text-4xl mr-2" icon="mdi:github" />
 				Sign in with Github
 			</button>
 		{/if}
