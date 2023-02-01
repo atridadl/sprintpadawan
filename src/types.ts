@@ -7,3 +7,10 @@ export interface ExtendedSession {
 		name: string | null | undefined;
 	};
 }
+
+export interface RealTimeData {
+	type: 'DB' | 'ROOM';
+	action: 'UPDATE' | 'ADD' | 'DELETE';
+	success: true;
+	data?: string;
+}

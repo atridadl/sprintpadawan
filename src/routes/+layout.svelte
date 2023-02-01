@@ -5,6 +5,7 @@
 	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { Toast } from '@skeletonlabs/skeleton';
 </script>
 
 <svelte:head>
@@ -13,6 +14,7 @@
 </svelte:head>
 
 <AppShell slotSidebarLeft="bg-surface-500/5 w-56 p-4">
+	<Toast />
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">

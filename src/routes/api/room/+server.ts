@@ -31,7 +31,11 @@ export const POST = (async ({ locals }) => {
 			}
 		});
 		if (room) {
-			writeToChannel(`${env}-${session.user.id!}`, 'event', 'DB_UPDATE');
+			writeToChannel(`${env}-${session.user.id!}`, 'event', {
+				type: 'DB',
+				action: 'ADD',
+				success: true
+			});
 		}
 		return new Response(String(JSON.stringify(room)));
 	}
@@ -55,7 +59,11 @@ export const DELETE = (async ({ locals, request }) => {
 		});
 
 		if (deletedRoom) {
-			writeToChannel(`${env}-${session.user.id!}`, 'event', 'DB_UPDATE');
+			writeToChannel(`${env}-${session.user.id!}`, 'event', {
+				type: 'DB',
+				action: 'DELETE',
+				success: true
+			});
 		}
 
 		return new Response(String(JSON.stringify({})));

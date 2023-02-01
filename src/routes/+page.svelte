@@ -3,6 +3,8 @@
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
 	import { signIn } from '@auth/sveltekit/client';
+	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import type { RealTimeData } from '../types';
 
 	export let data: PageData;
 
@@ -24,6 +26,37 @@
 		});
 	};
 
+	const onRoomEventHandler = async (eventData: RealTimeData) => {
+		const { invalidateAll } = await import('$app/navigation');
+
+		let messageString = '';
+
+		if (eventData.action === 'ADD') {
+			messageString = eventData.success
+				? '🙌🏽 Your room has been created!'
+				: 'Uh-oh! Something went wrong!';
+		} else if (eventData.action === 'DELETE') {
+			messageString = eventData.success
+				? '🙌🏽 Your room has been deleted!'
+				: 'Uh-oh! Something went wrong!';
+		} else {
+			messageString = 'Error communicating with event backend.';
+		}
+
+		const t: ToastSettings = {
+			message: messageString,
+			preset: eventData.success ? 'success' : 'error',
+			autohide: true,
+			timeout: 4000
+		};
+
+		if (eventData.success) {
+			invalidateAll();
+		}
+
+		toastStore.trigger(t);
+	};
+
 	$: session = data.session;
 	$: rooms = data.rooms;
 	$: env = data.env;
@@ -34,8 +67,7 @@
 		console.log(env);
 		if (session) {
 			const { subscribeToChannel } = await import('$lib/ably.client');
-			const { invalidateAll } = await import('$app/navigation');
-			subscribeToChannel(`${env}-${session.user.id!}`, 'event', invalidateAll);
+			subscribeToChannel(`${env}-${session.user.id!}`, 'event', onRoomEventHandler);
 		}
 	});
 
