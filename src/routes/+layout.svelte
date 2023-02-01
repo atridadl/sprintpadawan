@@ -3,7 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
-	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 </script>
 
@@ -16,14 +16,19 @@
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">SprintPadawan</strong>
+				<img
+					class="mr-2 mx-auto"
+					width="32px"
+					height="32px"
+					src="/logo.svg"
+					alt="Logo for Sprint Padawan"
+				/>
+				<strong class="text-xl">Sprint Padawan</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				{#if $page.data.session}
 					<button on:click={signOut}>Logout</button>
 					<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
-				{:else}
-					<button on:click={() => signIn('github')}>Login</button>
 				{/if}
 			</svelte:fragment>
 		</AppBar>

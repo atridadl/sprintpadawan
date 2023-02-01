@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
+	import { signIn } from '@auth/sveltekit/client';
 
 	export let data: PageData;
 
@@ -91,14 +92,30 @@
 				src="/logo.svg"
 				alt="Logo for Sprint Padawan"
 			/>
-			<h1 class="my-4">
-				<span class="text-pink-600 hover:drop-shadow-lg">Plan.</span>
-				<span class="text-purple-600 hover:drop-shadow-lg">Sprint.</span>
-				<span class="text-cyan-400 hover:drop-shadow-lg">Repeat.</span>
+
+			<h1>
+				<span
+					class="bg-gradient-to-br from-pink-700 to-pink-400 bg-clip-text text-transparent box-decoration-clone"
+					>Plan.</span
+				>
+				<span
+					class="bg-gradient-to-br from-purple-700 to-purple-400 bg-clip-text text-transparent box-decoration-clone"
+					>Sprint.</span
+				>
+				<span
+					class="bg-gradient-to-br from-cyan-700 to-cyan-400 bg-clip-text text-transparent box-decoration-clone"
+					>Repeat.</span
+				>
 			</h1>
 
 			<h2 class="my-4">Sprint Padawan helps agile teams do less planning and more building.</h2>
-			<h3 class="my-4">Please sign in above using your GitHub account!</h3>
+			<button
+				on:click={() => signIn('github')}
+				class="btn variant-ghost-surface btn-base ring-2 ring-tertiary-500 ring-inset text-white"
+			>
+				<Icon class="text-4xl mr-2" icon="mdi:github" />
+				Sign in with Github
+			</button>
 		{/if}
 	</div>
 </div>
