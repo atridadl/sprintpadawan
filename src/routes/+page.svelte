@@ -88,7 +88,7 @@
 				class="my-4 mx-auto"
 				width="200px"
 				height="200px"
-				src="/logo.webp"
+				src="/logo.svg"
 				alt="Logo for Sprint Padawan"
 			/>
 			<h1 class="my-4">
