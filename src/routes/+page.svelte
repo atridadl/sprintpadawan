@@ -25,11 +25,11 @@
 
 	$: session = data.session;
 	$: rooms = data.rooms;
+	$: env = data.env;
 
 	let roomId = '';
 
 	onMount(async () => {
-		const env = import.meta.env.VERCEL_ENV ? import.meta.env.VERCEL_ENV : 'local';
 		console.log(env);
 		if (session) {
 			const { subscribeToChannel } = await import('$lib/ably.client');

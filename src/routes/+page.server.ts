@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import type { ExtendedSession } from '../types';
 import type { Room } from '@prisma/client';
+import { VERCEL_ENV } from '$env/static/private';
 
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
 	const session: ExtendedSession = (await locals.getSession()) as ExtendedSession;
@@ -9,6 +10,7 @@ export const load: PageServerLoad = (async ({ fetch, locals }) => {
 
 	return {
 		session,
-		rooms
+		rooms,
+		env: VERCEL_ENV ? VERCEL_ENV : 'local'
 	};
 }) satisfies PageServerLoad;
