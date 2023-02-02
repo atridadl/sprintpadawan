@@ -127,15 +127,15 @@
 
 			<h1>
 				<span
-					class="bg-gradient-to-br from-pink-700 to-pink-400 bg-clip-text text-transparent box-decoration-clone"
+					class="bg-gradient-to-br from-pink-600 to-pink-400 bg-clip-text text-transparent box-decoration-clone"
 					>Plan.</span
 				>
 				<span
-					class="bg-gradient-to-br from-purple-700 to-purple-400 bg-clip-text text-transparent box-decoration-clone"
+					class="bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent box-decoration-clone"
 					>Sprint.</span
 				>
 				<span
-					class="bg-gradient-to-br from-cyan-700 to-cyan-400 bg-clip-text text-transparent box-decoration-clone"
+					class="bg-gradient-to-br from-cyan-600	 to-cyan-400 bg-clip-text text-transparent box-decoration-clone"
 					>Repeat.</span
 				>
 			</h1>
