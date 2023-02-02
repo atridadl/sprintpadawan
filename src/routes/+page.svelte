@@ -82,8 +82,10 @@
 	});
 
 	onDestroy(async () => {
-		const { unsubscribe } = await import('$lib/ably.client');
-		unsubscribe(`${env}-${session.user.id!}`);
+		if (session) {
+			const { unsubscribe } = await import('$lib/ably.client');
+			unsubscribe(`${env}-${session.user.id!}`);
+		}
 	});
 </script>
 

@@ -14,17 +14,17 @@
 	};
 
 	onMount(async () => {
-		if (session) {
+		if (room) {
 			const { subscribeToChannel } = await import('$lib/ably.client');
-			subscribeToChannel(`${env}-${room.id!}`, 'event', () => {
-				console.log('naw');
-			});
+			subscribeToChannel(`${env}-${room.id!}`, 'event', onRoomEventHandler);
 		}
 	});
 
 	onDestroy(async () => {
-		const { unsubscribe } = await import('$lib/ably.client');
-		unsubscribe(`${env}-${room.id!}`);
+		if (room) {
+			const { unsubscribe } = await import('$lib/ably.client');
+			unsubscribe(`${env}-${room.id!}`);
+		}
 	});
 </script>
 

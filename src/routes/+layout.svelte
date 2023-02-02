@@ -6,7 +6,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { Toast } from '@skeletonlabs/skeleton';
-	import { goto } from '$app/navigation';
+	import Icon from '@iconify/svelte';
 </script>
 
 <svelte:head>
@@ -30,13 +30,14 @@
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				{#if $page.data.session}
-					<button
-						on:click={async () => {
-							await goto('/');
-							signOut();
-						}}>Logout</button
-					>
-					<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
+					{#if $page.route.id === '/'}
+						<button on:click={signOut}>Logout</button>
+						<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
+					{:else}
+						<a href="/" class="btn hover:text-pink-500" data-sveltekit-preload-data="hover">
+							<Icon icon="material-symbols:arrow-back" /> Back
+						</a>
+					{/if}
 				{/if}
 			</svelte:fragment>
 		</AppBar>

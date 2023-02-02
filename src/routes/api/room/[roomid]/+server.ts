@@ -32,7 +32,6 @@ export const GET = (async ({ locals, params }) => {
 				}
 			}
 		});
-		console.log(room);
 		return new Response(String(JSON.stringify(room)));
 	}
 	throw error(403, 'Not signed in!');

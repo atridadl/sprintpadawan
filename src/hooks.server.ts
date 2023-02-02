@@ -8,10 +8,10 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { ExtendedSession } from './types';
 
 async function authorization({ event, resolve }: any) {
-	if (event.url.pathname.startsWith('/authenticated')) {
+	if (event.url.pathname.startsWith('/room')) {
 		const session = await event.locals.getSession();
 		if (!session) {
-			throw redirect(303, '/auth');
+			throw redirect(303, '/');
 		}
 	}
 
