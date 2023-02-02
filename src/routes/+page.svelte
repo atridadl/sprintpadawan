@@ -135,7 +135,7 @@
 					>Sprint.</span
 				>
 				<span
-					class="bg-gradient-to-br from-cyan-600	 to-cyan-400 bg-clip-text text-transparent box-decoration-clone"
+					class="bg-gradient-to-br from-cyan-600 to-cyan-400 bg-clip-text text-transparent box-decoration-clone"
 					>Repeat.</span
 				>
 			</h1>
