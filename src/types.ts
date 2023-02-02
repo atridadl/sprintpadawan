@@ -14,3 +14,14 @@ export interface RealTimeData {
 	success: true;
 	data?: string;
 }
+
+export interface ExtendedRoom {
+	id: string;
+	userId: string;
+	owner: {
+		id: string;
+		email: string | null;
+		image: string | null;
+		name: string | null;
+	};
+}

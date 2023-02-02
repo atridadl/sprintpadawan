@@ -5,8 +5,15 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { RealTimeData } from '../types';
+	import { invalidateAll, goto } from '$app/navigation';
 
 	export let data: PageData;
+
+	$: session = data.session;
+	$: rooms = data.rooms;
+	$: env = data.env;
+
+	let roomIdInput = '';
 
 	const createRoom = async () => {
 		await fetch('/api/room', {
@@ -15,20 +22,30 @@
 	};
 
 	const deleteRoom = async (id: string) => {
-		await fetch('/api/room', {
+		await fetch(`/api/room/${id}`, {
 			method: 'DELETE',
-			body: JSON.stringify({
-				id
-			}),
 			headers: {
 				'content-type': 'application/json'
 			}
 		});
 	};
 
-	const onRoomEventHandler = async (eventData: RealTimeData) => {
-		const { invalidateAll } = await import('$app/navigation');
+	const joinRoom = () => {
+		if (roomIdInput.length > 0) {
+			goto(`/room/${roomIdInput}`);
+		} else {
+			const t: ToastSettings = {
+				message: 'Please enter a Room ID.',
+				preset: 'error',
+				autohide: true,
+				timeout: 4000
+			};
 
+			toastStore.trigger(t);
+		}
+	};
+
+	const onUserEventHandler = async (eventData: RealTimeData) => {
 		let messageString = '';
 
 		if (eventData.action === 'ADD') {
@@ -57,23 +74,16 @@
 		toastStore.trigger(t);
 	};
 
-	$: session = data.session;
-	$: rooms = data.rooms;
-	$: env = data.env;
-
-	let roomId = '';
-
 	onMount(async () => {
-		console.log(env);
 		if (session) {
 			const { subscribeToChannel } = await import('$lib/ably.client');
-			subscribeToChannel(`${env}-${session.user.id!}`, 'event', onRoomEventHandler);
+			subscribeToChannel(`${env}-${session.user.id!}`, 'event', onUserEventHandler);
 		}
 	});
 
 	onDestroy(async () => {
 		const { unsubscribe } = await import('$lib/ably.client');
-		unsubscribe();
+		unsubscribe(`${env}-${session.user.id!}`);
 	});
 </script>
 
@@ -85,8 +95,21 @@
 			<h3>Join a room!</h3>
 			<label class="input-label">
 				<span>Room ID</span>
-				<input type="text" id="sessionId" bind:value={roomId} minlength="2" required />
-				<button class="btn variant-filled-primary btn-base"> Join! </button>
+				<input
+					type="text"
+					id="sessionId"
+					class="text-center"
+					bind:value={roomIdInput}
+					minlength="2"
+					required
+				/>
+				<button
+					on:click={joinRoom}
+					disabled={roomIdInput.length === 0}
+					class="btn variant-filled-primary btn-base"
+				>
+					Join!
+				</button>
 			</label>
 
 			<h3>Create a new room!</h3>

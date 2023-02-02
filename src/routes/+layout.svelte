@@ -6,6 +6,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { Toast } from '@skeletonlabs/skeleton';
+	import { goto } from '$app/navigation';
 </script>
 
 <svelte:head>
@@ -25,11 +26,16 @@
 					src="/logo.svg"
 					alt="Logo for Sprint Padawan"
 				/>
-				<strong class="text-xl">Sprint Padawan</strong>
+				<a href="/" class="text-xl hover:text-pink-500">Sprint Padawan</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				{#if $page.data.session}
-					<button on:click={signOut}>Logout</button>
+					<button
+						on:click={async () => {
+							await goto('/');
+							signOut();
+						}}>Logout</button
+					>
 					<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
 				{/if}
 			</svelte:fragment>
