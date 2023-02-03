@@ -57,5 +57,13 @@ model VerificationToken {
 model Room {
   id String @id @default(cuid()) @unique
   userId String
+  votes Vote[]
   owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Vote {
+  id String @id @default(cuid()) @unique
+  userId String
+  value Int?
+  room Room @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

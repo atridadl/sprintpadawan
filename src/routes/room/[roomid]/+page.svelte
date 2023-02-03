@@ -2,8 +2,15 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { RealTimeData } from '../../../types';
 	import type { PageData } from './$types';
+	import { writable, type Writable } from 'svelte/store';
+	import { RadioGroup, RadioItem, SlideToggle } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
+
+	// Local form data
+	const voteStore: Writable<number> = writable(0);
+	let resultsVisible: boolean = false;
+	let polling: boolean = false;
 
 	$: session = data.session;
 	$: room = data.room;
@@ -30,15 +37,26 @@
 
 <div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
 	<div>
-		<h3>Room ID: room.</h3>
-		<h4>Welcome, {session.user.id}</h4>
+		<h4>Room ID: {room.id}</h4>
+
 		{#if session.user.id === room.owner.id}
-			<div>
-				Admin Controls:
-				<button class="btn variant-filled-primary btn-base">New Story</button>
-				<button class="btn variant-filled-primary btn-base">Begin Polling</button>
-				<button class="btn variant-filled-primary btn-base">Stop Polling</button>
-				<button class="btn variant-filled-primary btn-base">Reveal Answers</button>
+			<div class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4">
+				<p>Vote:</p>
+				<RadioGroup selected={voteStore}>
+					<RadioItem value={0}>0.5</RadioItem>
+					<RadioItem value={1}>1</RadioItem>
+					<RadioItem value={2}>2</RadioItem>
+					<RadioItem value={3}>3</RadioItem>
+					<RadioItem value={5}>5</RadioItem>
+					<RadioItem value={99}>99</RadioItem>
+				</RadioGroup>
+			</div>
+
+			<div class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4">
+				<p>Admin Controls:</p>
+				<button class="btn variant-filled-secondary btn-base">Set Story</button>
+				<SlideToggle class="my-auto" bind:checked={polling}>Polling</SlideToggle>
+				<SlideToggle bind:checked={resultsVisible}>Show Results</SlideToggle>
 			</div>
 		{/if}
 	</div>

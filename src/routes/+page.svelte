@@ -67,11 +67,11 @@
 			timeout: 4000
 		};
 
+		toastStore.trigger(t);
+
 		if (eventData.success) {
 			invalidateAll();
 		}
-
-		toastStore.trigger(t);
 	};
 
 	onMount(async () => {
@@ -166,10 +166,7 @@
 			</h1>
 
 			<h2 class="my-4">Sprint Padawan helps agile teams do less planning and more building.</h2>
-			<button
-				on:click={() => signIn('github')}
-				class="btn variant-ghost-surface btn-base ring-2 ring-tertiary-500 ring-inset text-white"
-			>
+			<button on:click={() => signIn('github')} class="btn variant-ghost-surface btn-base">
 				Sign in with Github
 			</button>
 		{/if}

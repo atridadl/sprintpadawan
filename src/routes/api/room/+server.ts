@@ -25,6 +25,7 @@ export const POST = (async ({ locals }) => {
 	const session = (await locals.getSession()) as ExtendedSession;
 
 	if (session) {
+		console.log(session);
 		const room = await prisma.room.create({
 			data: {
 				userId: session.user.id!
