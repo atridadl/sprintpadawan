@@ -1,6 +1,6 @@
 import Ably from 'ably';
 import { PUBLIC_ABLY_SUB_KEY } from '$env/static/public';
-import type { RealTimeData } from '../types';
+import type { RealTimeData } from './types';
 
 export const ably = new Ably.Realtime({
 	key: PUBLIC_ABLY_SUB_KEY,

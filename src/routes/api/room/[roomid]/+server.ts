@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
 import { writeToChannel } from '$lib/server/ably.server';
-import type { ExtendedSession } from '../../../../types';
+import type { ExtendedSession } from '$lib/types';
 import { VERCEL_ENV } from '$env/static/private';
 
 const env = VERCEL_ENV ? VERCEL_ENV : 'local';
@@ -22,17 +22,62 @@ export const GET = (async ({ locals, params }) => {
 			select: {
 				id: true,
 				userId: true,
-				owner: {
+				visible: true,
+				activeStory: {
 					select: {
+						_count: true,
+						name: true,
 						id: true,
-						email: true,
-						image: true,
-						name: true
+						votes: {
+							select: {
+								id: true,
+								value: true,
+								userId: true,
+								owner: {
+									select: {
+										_count: true,
+										name: true
+									}
+								}
+							}
+						}
 					}
-				}
+				},
+				owner: true
 			}
 		});
 		return new Response(String(JSON.stringify(room)));
+	}
+	throw error(403, 'Not signed in!');
+}) satisfies RequestHandler;
+
+export const POST = (async ({ locals, params, request }) => {
+	const session = (await locals.getSession()) as ExtendedSession;
+	const body = await request.json();
+
+	if (session) {
+		if (!params.roomid) {
+			throw error(400, 'Room ID not provided!');
+		}
+
+		const room = await prisma.room.update({
+			where: {
+				id: params.roomid
+			},
+			data: {
+				userId: session.user.id!,
+				visible: body ? body.visible : false
+			}
+		});
+		if (room) {
+			writeToChannel(`${env}-${room.id}`, 'event', {
+				type: 'DB',
+				action: 'UPDATE',
+				success: true
+			});
+		}
+
+		return new Response(String(JSON.stringify({})));
 	}
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;
