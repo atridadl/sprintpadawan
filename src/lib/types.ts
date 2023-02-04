@@ -1,3 +1,5 @@
+import type { Story, User, Vote } from '@prisma/client';
+
 export interface ExtendedSession {
 	expires: string;
 	user: {
@@ -9,19 +11,8 @@ export interface ExtendedSession {
 }
 
 export interface RealTimeData {
-	type: 'DB' | 'ROOM';
+	type: 'DB';
 	action: 'UPDATE' | 'ADD' | 'DELETE';
 	success: true;
 	data?: string;
-}
-
-export interface ExtendedRoom {
-	id: string;
-	userId: string;
-	owner: {
-		id: string;
-		email: string | null;
-		image: string | null;
-		name: string | null;
-	};
 }

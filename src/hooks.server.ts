@@ -5,7 +5,7 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import prisma from '$lib/server/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { ExtendedSession } from './types';
+import type { ExtendedSession } from '$lib/types';
 
 async function authorization({ event, resolve }: any) {
 	if (event.url.pathname.startsWith('/room')) {

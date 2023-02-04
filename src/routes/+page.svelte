@@ -4,7 +4,7 @@
 	import Icon from '@iconify/svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
-	import type { RealTimeData } from '../types';
+	import type { RealTimeData } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
 
 	export let data: PageData;

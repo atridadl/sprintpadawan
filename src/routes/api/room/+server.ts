@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import prisma from '$lib/server/prisma';
 import { error } from '@sveltejs/kit';
 import { writeToChannel } from '$lib/server/ably.server';
-import type { ExtendedSession } from '../../../types';
+import type { ExtendedSession } from '$lib/types';
 import { VERCEL_ENV } from '$env/static/private';
 
 const env = VERCEL_ENV ? VERCEL_ENV : 'local';
@@ -25,13 +25,21 @@ export const POST = (async ({ locals }) => {
 	const session = (await locals.getSession()) as ExtendedSession;
 
 	if (session) {
-		console.log(session);
 		const room = await prisma.room.create({
 			data: {
-				userId: session.user.id!
+				userId: session.user.id!,
+				visible: false
 			}
 		});
 		if (room) {
+			const story = await prisma.story.create({
+				data: {
+					name: 'First Story!',
+					userId: session.user.id!,
+					roomId: room.id
+				}
+			});
+
 			writeToChannel(`${env}-${session.user.id!}`, 'event', {
 				type: 'DB',
 				action: 'ADD',

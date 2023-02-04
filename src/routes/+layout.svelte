@@ -2,7 +2,7 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import { AppShell, AppBar, Avatar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { Toast } from '@skeletonlabs/skeleton';
@@ -39,7 +39,6 @@
 						</a>
 					{/if}
 				{/if}
-				<LightSwitch />
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
