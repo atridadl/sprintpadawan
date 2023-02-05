@@ -36,7 +36,9 @@ export const GET = (async ({ locals, params }) => {
 								owner: {
 									select: {
 										_count: true,
-										name: true
+										name: true,
+										image: true,
+										email: true
 									}
 								}
 							}

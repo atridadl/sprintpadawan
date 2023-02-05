@@ -2,14 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { RealTimeData } from '$lib/types';
 	import type { PageData } from './$types';
-	import { writable, type Writable } from 'svelte/store';
-	import {
-		RadioGroup,
-		RadioItem,
-		SlideToggle,
-		toastStore,
-		type ToastSettings
-	} from '@skeletonlabs/skeleton';
+	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
 	import type { Vote } from '@prisma/client';
 
@@ -17,7 +10,7 @@
 
 	$: session = data.session;
 	$: room = data.room;
-	$: vote = data.room.activeStory.votes.find((vote: Vote) => vote.userId === session.user.id);
+	$: vote = data.vote;
 	$: env = data.env;
 
 	// Local form data
@@ -121,9 +114,14 @@
 			<h3>Current Story: {room.activeStory.name}</h3>
 
 			<ul class="list">
-				{#each room.activeStory.votes as vote}
+				{#each room.activeStory.votes as listVote}
 					<li>
-						<span class="flex-auto">{vote.owner.name}: {room.visible ? vote.value : '???'}</span>
+						<Avatar src={listVote.owner.image} />
+						<span class="flex-auto"
+							>{listVote.owner.name}: {room.visible || listVote.id == vote.id
+								? listVote.value
+								: '???'}</span
+						>
 					</li>
 				{/each}
 			</ul>
