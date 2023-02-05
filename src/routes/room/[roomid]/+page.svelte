@@ -4,7 +4,6 @@
 	import type { PageData } from './$types';
 	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
-	import type { Vote } from '@prisma/client';
 
 	export let data: PageData;
 
@@ -113,6 +112,10 @@
 		>
 			<h3>Current Story: {room.activeStory.name}</h3>
 
+			{#if room.activeStory.votes.length === 0}
+				<p>Waiting for votes...</p>
+			{/if}
+
 			<ul class="list">
 				{#each room.activeStory.votes as listVote}
 					<li>
@@ -128,6 +131,7 @@
 		</div>
 		<div class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4">
 			<p>Vote:</p>
+
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '0.5');
@@ -172,7 +176,7 @@
 			>
 				<button
 					on:click={() => updateStory(room.id, storyTextBox)}
-					class="btn variant-filled-secondary btn-base">Set Story</button
+					class="btn variant-filled-secondary btn-base">Reset Story</button
 				>
 				<input type="text" id="story" class="text-center" bind:value={storyTextBox} required />
 				<SlideToggle
