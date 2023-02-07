@@ -46,6 +46,7 @@ model User {
   rooms Room[]
   stories Story[]
   votes Vote[]
+  presenceSet Presence[]
 }
 
 model VerificationToken {
@@ -61,6 +62,7 @@ model Room {
   userId String
   visible Boolean
   activeStory Story?
+  presenseSet Presence[]
   owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -83,5 +85,15 @@ model Vote {
   story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@unique([userId, storyId])
+}
 
+model Presence {
+  id String @id @default(cuid()) @unique
+  userId String
+  roomId String
+  value String
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
 }

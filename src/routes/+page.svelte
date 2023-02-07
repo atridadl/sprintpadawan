@@ -76,8 +76,9 @@
 
 	onMount(async () => {
 		if (session) {
-			const { subscribeToChannel } = await import('$lib/ably.client');
-			subscribeToChannel(`${env}-${session.user.id!}`, 'event', onUserEventHandler);
+			const { initAbly, subscribeToChannel } = await import('$lib/ably.client');
+			initAbly(session.user.id!);
+			subscribeToChannel(`${env}-${session.user.id!}`, 'event', true, onUserEventHandler);
 		}
 	});
 

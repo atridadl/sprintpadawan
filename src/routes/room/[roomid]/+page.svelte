@@ -4,6 +4,7 @@
 	import type { PageData } from './$types';
 	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
+	import { PresenceSet } from '$lib/ably.client';
 
 	export let data: PageData;
 
@@ -89,10 +90,13 @@
 
 	onMount(async () => {
 		if (room) {
-			const { subscribeToChannel } = await import('$lib/ably.client');
-			subscribeToChannel(`${env}-${room.id!}`, 'event', onRoomEventHandler);
+			const { initAbly, subscribeToChannel, enterPresenseSet } = await import('$lib/ably.client');
+			initAbly(session.user.id!);
+			subscribeToChannel(`${env}-${room.id!}`, 'event', true, onRoomEventHandler);
 			storyTextBox = room.activeStory.name;
 			resultsVisible = room.visible;
+			enterPresenseSet(`${env}-${room.id!}`, session.user.name!, session.user.image!);
+			PresenceSet.subscribe((item) => {});
 		}
 	});
 
@@ -117,16 +121,27 @@
 			{/if}
 
 			<ul class="list">
-				{#each room.activeStory.votes as listVote}
-					<li>
-						<Avatar src={listVote.owner.image} />
-						<span class="flex-auto"
-							>{listVote.owner.name}: {room.visible || listVote.id == vote.id
-								? listVote.value
-								: '???'}</span
-						>
-					</li>
-				{/each}
+				{#if $PresenceSet}
+					{#each $PresenceSet as presenceItem}
+						<li>
+							<Avatar src={presenceItem.data.image} />
+							<span class="flex-auto">
+								{presenceItem.data.name}:
+								{#if vote}
+									{#if room.visible || presenceItem.clientId == vote.userId}
+										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
+									{:else}
+										???
+									{/if}
+								{:else if room.visible}
+									-
+								{:else}
+									???
+								{/if}
+							</span>
+						</li>
+					{/each}
+				{/if}
 			</ul>
 		</div>
 		<div class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4">
