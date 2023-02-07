@@ -127,14 +127,14 @@
 							<Avatar src={presenceItem.data.image} />
 							<span class="flex-auto">
 								{presenceItem.data.name}:
-								{#if vote}
-									{#if room.visible || presenceItem.clientId == vote.userId}
+								{#if !room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
+									-
+								{:else if vote}
+									{#if room.visible || vote.userId === presenceItem.clientId}
 										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
 									{:else}
 										???
 									{/if}
-								{:else if room.visible}
-									-
 								{:else}
 									???
 								{/if}
