@@ -22,12 +22,12 @@ export const GET = (async ({ locals, params }) => {
 			select: {
 				id: true,
 				userId: true,
-				visible: true,
 				activeStory: {
 					select: {
 						_count: true,
 						name: true,
 						id: true,
+						visible: true,
 						votes: {
 							select: {
 								id: true,
@@ -49,37 +49,6 @@ export const GET = (async ({ locals, params }) => {
 			}
 		});
 		return new Response(String(JSON.stringify(room)));
-	}
-	throw error(403, 'Not signed in!');
-}) satisfies RequestHandler;
-
-export const POST = (async ({ locals, params, request }) => {
-	const session = (await locals.getSession()) as ExtendedSession;
-	const body = await request.json();
-
-	if (session) {
-		if (!params.roomid) {
-			throw error(400, 'Room ID not provided!');
-		}
-
-		const room = await prisma.room.update({
-			where: {
-				id: params.roomid
-			},
-			data: {
-				userId: session.user.id!,
-				visible: body ? body.visible : false
-			}
-		});
-		if (room) {
-			writeToChannel(`${env}-${room.id}`, 'event', {
-				type: 'DB',
-				action: 'UPDATE',
-				success: true
-			});
-		}
-
-		return new Response(String(JSON.stringify({})));
 	}
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;

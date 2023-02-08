@@ -13,7 +13,6 @@ export const load: PageServerLoad = (async ({ fetch, locals, params }) => {
 	if (!room) {
 		throw error(404, 'This is not the room you are looking for...');
 	}
-	console.log;
 
 	return {
 		session,

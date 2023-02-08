@@ -27,8 +27,7 @@ export const POST = (async ({ locals }) => {
 	if (session) {
 		const room = await prisma.room.create({
 			data: {
-				userId: session.user.id!,
-				visible: false
+				userId: session.user.id!
 			}
 		});
 		if (room) {
@@ -36,7 +35,8 @@ export const POST = (async ({ locals }) => {
 				data: {
 					name: 'First Story!',
 					userId: session.user.id!,
-					roomId: room.id
+					roomId: room.id,
+					visible: false
 				}
 			});
 
@@ -46,7 +46,7 @@ export const POST = (async ({ locals }) => {
 				success: true
 			});
 		}
-		return new Response(String(JSON.stringify(room)));
+		return new Response(String(JSON.stringify(!!room)));
 	}
 	throw error(403, 'Not signed in!');
 }) satisfies RequestHandler;

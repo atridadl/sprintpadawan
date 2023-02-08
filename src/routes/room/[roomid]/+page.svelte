@@ -5,6 +5,7 @@
 	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
 	import { PresenceSet } from '$lib/ably.client';
+	import { resetStory, setVote, updateStoryVisibility } from '$lib/api';
 
 	export let data: PageData;
 
@@ -16,44 +17,6 @@
 	// Local form data
 	let resultsVisible: boolean = false;
 	let storyTextBox: string = '';
-
-	const setVote = async (storyId: string, value: string) => {
-		await fetch('/api/vote', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				value,
-				storyId
-			})
-		});
-	};
-
-	const updateStory = async (roomId: string, name: string) => {
-		await fetch('/api/story', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				name,
-				roomId
-			})
-		});
-	};
-
-	const updateRoom = async (id: string, visible?: boolean) => {
-		await fetch(`/api/room/${id}`, {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				visible
-			})
-		});
-	};
 
 	const onRoomEventHandler = async (eventData: RealTimeData) => {
 		let messageString = '';
@@ -84,7 +47,7 @@
 		if (eventData.success) {
 			await invalidateAll();
 			storyTextBox = room.activeStory.name;
-			resultsVisible = room.visible;
+			resultsVisible = room.activeStory.visible;
 		}
 	};
 
@@ -94,7 +57,7 @@
 			initAbly(session.user.id!);
 			subscribeToChannel(`${env}-${room.id!}`, 'event', true, onRoomEventHandler);
 			storyTextBox = room.activeStory.name;
-			resultsVisible = room.visible;
+			resultsVisible = room.activeStory.visible;
 			enterPresenseSet(`${env}-${room.id!}`, session.user.name!, session.user.image!);
 			PresenceSet.subscribe((item) => {});
 		}
@@ -190,15 +153,22 @@
 				class="card variant-glass-tertiary p-4 m-4 flex flex-auto justify-center items-center space-x-4"
 			>
 				<button
-					on:click={() => updateStory(room.id, storyTextBox)}
+					on:click={() => resetStory(room.activeStory.id, storyTextBox)}
 					class="btn variant-filled-secondary btn-base">Reset Story</button
 				>
-				<input type="text" id="story" class="text-center" bind:value={storyTextBox} required />
+				<input
+					type="text"
+					id="story"
+					class="input text-center"
+					bind:value={storyTextBox}
+					required
+				/>
 				<SlideToggle
 					on:change={() => {
-						updateRoom(room.id, resultsVisible);
+						updateStoryVisibility(room.activeStory.id, resultsVisible);
 					}}
 					class="my-auto"
+					name="toggle-visbility"
 					bind:checked={resultsVisible}>{resultsVisible ? 'Hide' : 'Show'}</SlideToggle
 				>
 			</div>

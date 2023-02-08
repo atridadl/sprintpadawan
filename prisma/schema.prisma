@@ -59,7 +59,6 @@ model VerificationToken {
 model Room {
   id String @id @default(cuid()) @unique
   userId String
-  visible Boolean
   activeStory Story?
   owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -69,6 +68,7 @@ model Story {
   userId String
   roomId String @unique
   name String
+  visible Boolean
   votes Vote[]
   owner User @relation(fields: [userId], references: [id], onDelete: Cascade)
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)

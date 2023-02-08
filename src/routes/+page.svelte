@@ -6,6 +6,7 @@
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { RealTimeData } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
+	import { createRoom, deleteRoom } from '$lib/api';
 
 	export let data: PageData;
 
@@ -15,24 +16,9 @@
 
 	let roomIdInput = '';
 
-	const createRoom = async () => {
-		await fetch('/api/room', {
-			method: 'POST'
-		});
-	};
-
-	const deleteRoom = async (id: string) => {
-		await fetch(`/api/room/${id}`, {
-			method: 'DELETE',
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-	};
-
-	const joinRoom = () => {
-		if (roomIdInput.length > 0) {
-			goto(`/room/${roomIdInput}`);
+	const joinRoom = (roomId: string) => {
+		if (roomId.length > 0) {
+			goto(`/room/${roomId}`);
 		} else {
 			const t: ToastSettings = {
 				message: 'Please enter a Room ID.',
@@ -101,13 +87,13 @@
 				<input
 					type="text"
 					id="sessionId"
-					class="text-center"
+					class="input text-center mb-2"
 					bind:value={roomIdInput}
 					minlength="2"
 					required
 				/>
 				<button
-					on:click={joinRoom}
+					on:click={() => joinRoom(roomIdInput)}
 					disabled={roomIdInput.length === 0}
 					class="btn variant-filled-primary btn-base"
 				>
