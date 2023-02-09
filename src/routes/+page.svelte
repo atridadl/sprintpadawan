@@ -4,7 +4,7 @@
 	import Icon from '@iconify/svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
-	import type { RealTimeData } from '$lib/types';
+	import type { RTEvent } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
 	import { createRoom, deleteRoom } from '$lib/api';
 
@@ -31,7 +31,7 @@
 		}
 	};
 
-	const onUserEventHandler = async (eventData: RealTimeData) => {
+	const onUserEventHandler = async (eventData: RTEvent) => {
 		let messageString = '';
 
 		if (eventData.action === 'ADD') {

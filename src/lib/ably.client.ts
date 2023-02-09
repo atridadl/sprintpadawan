@@ -1,6 +1,6 @@
 import Ably from 'ably';
 import { PUBLIC_ABLY_SUB_KEY } from '$env/static/public';
-import type { RealTimeData } from './types';
+import type { RTEvent } from './types';
 import { writable, type Writable } from 'svelte/store';
 
 export const PresenceSet: Writable<Ably.Types.PresenceMessage[] | undefined> = writable([]);
@@ -27,7 +27,7 @@ export const subscribeToChannel = async (
 		const eventChannel = ably.channels.get(channel);
 		try {
 			await eventChannel.subscribe(event, (message) => {
-				const eventData: RealTimeData = JSON.parse(message.data);
+				const eventData: RTEvent = JSON.parse(message.data);
 				console.log(
 					`${eventData.success ? '✅' : '❌'} ${eventData.type} ${eventData.action} ${
 						eventData.success ? 'SUCCESS' : 'FAILED'

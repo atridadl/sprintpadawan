@@ -14,7 +14,7 @@
 	<meta name="description" content="Plan. Sprint. Repeat." />
 </svelte:head>
 
-<AppShell slotSidebarLeft="bg-surface-500/5 w-56 p-4">
+<AppShell>
 	<Toast />
 	<svelte:fragment slot="header">
 		<AppBar>
