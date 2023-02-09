@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import type { RealTimeData } from '$lib/types';
+	import type { RTEvent } from '$lib/types';
 	import type { PageData } from './$types';
 	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
@@ -18,32 +18,7 @@
 	let resultsVisible: boolean = false;
 	let storyTextBox: string = '';
 
-	const onRoomEventHandler = async (eventData: RealTimeData) => {
-		let messageString = '';
-
-		if (eventData.action === 'ADD') {
-			messageString = eventData.success
-				? '🙌🏽 Your story has been created!'
-				: 'Uh-oh! Something went wrong!';
-		} else if (eventData.action === 'DELETE') {
-			messageString = eventData.success
-				? '🙌🏽 Your story has been deleted!'
-				: 'Uh-oh! Something went wrong!';
-		} else if (eventData.action === 'UPDATE') {
-			messageString = eventData.success ? '🙌🏽 Room updated!' : 'Uh-oh! Something went wrong!';
-		} else {
-			messageString = 'Error communicating with event backend.';
-		}
-
-		const t: ToastSettings = {
-			message: messageString,
-			preset: eventData.success ? 'success' : 'error',
-			autohide: true,
-			timeout: 4000
-		};
-
-		toastStore.trigger(t);
-
+	const onRoomEventHandler = async (eventData: RTEvent) => {
 		if (eventData.success) {
 			await invalidateAll();
 			storyTextBox = room.activeStory.name;
@@ -71,11 +46,13 @@
 	});
 </script>
 
-<div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
+<div
+	class="container h-full mx-auto flex flex-col justify-center items-center text-center flex-wrap"
+>
 	<div>
 		<h4>Room ID: {room.id}</h4>
 		<div
-			class="card variant-glass-tertiary p-4 m-4 flex flex-col justify-center items-center text-center"
+			class="card variant-glass-tertiary p-4 m-4 flex flex-col justify-center items-center text-center flex-wrap break-words"
 		>
 			<h3>Current Story: {room.activeStory.name}</h3>
 
@@ -88,17 +65,6 @@
 							<Avatar src={presenceItem.data.image} />
 							<span class="flex-auto">
 								{presenceItem.data.name}:
-								<!-- {#if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId) === undefined}
-									-
-								{:else if room.activeStory.visible}
-									{#if vote && vote.userId === presenceItem.clientId}
-										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
-									{:else}
-										???
-									{/if}
-								{:else}
-									-
-								{/if} -->
 								{#if room.activeStory.visible}
 									{#if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
 										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
@@ -116,7 +82,9 @@
 				{/if}
 			</ul>
 		</div>
-		<div class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4">
+		<div
+			class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4 flex-wrap"
+		>
 			<p>Vote:</p>
 
 			<button
@@ -159,16 +127,16 @@
 
 		{#if session.user.id === room.owner.id}
 			<div
-				class="card variant-glass-tertiary p-4 m-4 flex flex-auto justify-center items-center space-x-4"
+				class="card variant-glass-tertiary p-4 m-4 flex flex-auto justify-center items-center space-x-4 flex-wrap"
 			>
 				<button
 					on:click={() => resetStory(room.activeStory.id, storyTextBox)}
-					class="btn variant-filled-secondary btn-base">Reset Story</button
+					class="btn variant-filled-secondary btn-base m-2">Reset Story</button
 				>
 				<input
 					type="text"
 					id="story"
-					class="input text-center"
+					class="input text-center m-2"
 					bind:value={storyTextBox}
 					required
 				/>
@@ -176,7 +144,7 @@
 					on:change={() => {
 						updateStoryVisibility(room.activeStory.id, resultsVisible);
 					}}
-					class="my-auto"
+					class="my-auto m-2"
 					name="toggle-visbility"
 					bind:checked={resultsVisible}>{resultsVisible ? 'Hide' : 'Show'}</SlideToggle
 				>
