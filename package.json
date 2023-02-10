@@ -20,7 +20,7 @@
 		"@skeletonlabs/skeleton": "^0.124.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-vercel": "^2.0.2",
-		"@sveltejs/kit": "^1.5.2",
+		"@sveltejs/kit": "^1.5.3",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@typescript-eslint/eslint-plugin": "^5.51.0",
@@ -46,8 +46,8 @@
 		"@auth/core": "^0.4.0",
 		"@auth/sveltekit": "^0.2.1",
 		"@next-auth/prisma-adapter": "^1.0.5",
-		"@prisma/client": "^4.10.0",
+		"@prisma/client": "^4.10.1",
 		"ably": "^1.2.35",
-		"prisma": "^4.10.0"
+		"prisma": "^4.10.1"
 	}
 }
