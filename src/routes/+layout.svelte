@@ -45,8 +45,10 @@
 	<slot />
 	<svelte:fragment slot="footer">
 		<div class="text-center m-auto">
-			Built by <a href="https://atridad.dev">Atridad Lahiji</a> using SvelteKit + Vercel + Planetscale
-			+ Ably
+			<p>
+				Built with 💜 by <a href="https://atridad.dev">Atridad Lahiji</a>. Repo can be found
+				<a href="https://github.com/atridadl/sprintpadawan">here</a>.
+			</p>
 		</div>
 	</svelte:fragment>
 </AppShell>
