@@ -17,7 +17,7 @@
 <AppShell>
 	<Toast />
 	<svelte:fragment slot="header">
-		<AppBar>
+		<AppBar background="bg-surface">
 			<svelte:fragment slot="lead">
 				<img
 					class="mr-2 mx-auto"
