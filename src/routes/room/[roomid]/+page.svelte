@@ -2,10 +2,17 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { RTEvent } from '$lib/types';
 	import type { PageData } from './$types';
-	import { Avatar, SlideToggle, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import {
+		Avatar,
+		SlideToggle,
+		clipboard,
+		toastStore,
+		type ToastSettings
+	} from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
 	import { PresenceSet } from '$lib/ably.client';
 	import { resetStory, setVote, updateStoryVisibility } from '$lib/api';
+	import Icon from '@iconify/svelte';
 
 	export let data: PageData;
 
@@ -17,6 +24,17 @@
 	// Local form data
 	let resultsVisible: boolean = false;
 	let storyTextBox: string = '';
+
+	const copyRoomUrlHandler = () => {
+		const t: ToastSettings = {
+			message: 'Room URL Copied',
+			preset: 'success',
+			autohide: true,
+			timeout: 2000
+		};
+
+		toastStore.trigger(t);
+	};
 
 	const onRoomEventHandler = async (eventData: RTEvent) => {
 		if (eventData.success) {
@@ -50,7 +68,15 @@
 	class="container h-full mx-auto flex flex-col justify-center items-center text-center flex-wrap"
 >
 	<div>
-		<h4>Room ID: {room.id}</h4>
+		<h4>
+			Room ID: {room.id}
+			<button on:click={copyRoomUrlHandler} use:clipboard={window.location.href}>
+				<Icon
+					class="text-lg mx-1 hover:text-pink-500"
+					icon="material-symbols:content-copy-outline"
+				/>
+			</button>
+		</h4>
 		<div
 			class="card variant-glass-tertiary p-4 m-4 flex flex-col justify-center items-center text-center flex-wrap break-words"
 		>
