@@ -25,6 +25,12 @@
 	let resultsVisible: boolean = false;
 	let storyTextBox: string = '';
 
+	const shareRoomUrlHandler = () => {
+		navigator.share({
+			url: window.location.href
+		});
+	};
+
 	const copyRoomUrlHandler = () => {
 		const t: ToastSettings = {
 			message: 'Room URL Copied',
@@ -75,6 +81,10 @@
 					class="text-lg mx-1 hover:text-pink-500"
 					icon="material-symbols:content-copy-outline"
 				/>
+			</button>
+
+			<button on:click={shareRoomUrlHandler}>
+				<Icon class="text-lg mx-1 hover:text-pink-500" icon="material-symbols:ios-share" />
 			</button>
 		</h4>
 		<div
