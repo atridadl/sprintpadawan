@@ -27,7 +27,9 @@
 
 	const shareRoomUrlHandler = () => {
 		navigator.share({
-			url: window.location.href
+			url: window.location.href,
+			text: 'Join my Sprint Padawan room!',
+			title: 'Sprint Padawan'
 		});
 	};
 
