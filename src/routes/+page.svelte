@@ -130,14 +130,14 @@
 										<td>{room.id}</td>
 										<td>
 											<button on:click={() => joinRoom(room.id)}>
-												<Icon class="text-lg mx-1 hover:text-pink-500" icon="ic:round-start" />
+												<Icon
+													class="text-2xl mx-1 hover:text-pink-500"
+													icon="majesticons:door-enter-line"
+												/>
 											</button>
 
 											<button on:click={() => deleteRoom(room.id)}>
-												<Icon
-													class="text-lg mx-1 hover:text-pink-500"
-													icon="fa6-regular:trash-can"
-												/>
+												<Icon class="text-2xl mx-1 hover:text-pink-500" icon="octicon:trash-16" />
 											</button>
 										</td>
 									</tr>
