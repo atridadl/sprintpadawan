@@ -2,13 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { RTEvent } from '$lib/types';
 	import type { PageData } from './$types';
-	import {
-		Avatar,
-		SlideToggle,
-		clipboard,
-		toastStore,
-		type ToastSettings
-	} from '@skeletonlabs/skeleton';
+	import { Avatar, clipboard, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { invalidateAll } from '$app/navigation';
 	import { PresenceSet } from '$lib/ably.client';
 	import { resetStory, setVote, updateStoryVisibility } from '$lib/api';
@@ -22,7 +16,6 @@
 	$: env = data.env;
 
 	// Local form data
-	let resultsVisible: boolean = false;
 	let storyTextBox: string = '';
 
 	const shareRoomUrlHandler = () => {
@@ -48,7 +41,6 @@
 		if (eventData.success) {
 			await invalidateAll();
 			storyTextBox = room.activeStory.name;
-			resultsVisible = room.activeStory.visible;
 		}
 	};
 
@@ -58,7 +50,6 @@
 			initAbly(session.user.id!);
 			subscribeToChannel(`${env}-${room.id!}`, 'event', true, onRoomEventHandler);
 			storyTextBox = room.activeStory.name;
-			resultsVisible = room.activeStory.visible;
 			enterPresenseSet(`${env}-${room.id!}`, session.user.name!, session.user.image!);
 			PresenceSet.subscribe((item) => {});
 		}
@@ -129,47 +120,47 @@
 				on:click={() => {
 					setVote(room.activeStory.id, '0.5');
 				}}
-				class="btn-icon">0.5</button
+				class="btn-icon hover:text-pink-500">0.5</button
 			>
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '1');
 				}}
-				class="btn-icon">1</button
+				class="btn-icon hover:text-pink-500">1</button
 			>
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '2');
 				}}
-				class="btn-icon">2</button
+				class="btn-icon hover:text-pink-500">2</button
 			>
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '3');
 				}}
-				class="btn-icon">3</button
+				class="btn-icon hover:text-pink-500">3</button
 			>
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '5');
 				}}
-				class="btn-icon">5</button
+				class="btn-icon hover:text-pink-500">5</button
 			>
 			<button
 				on:click={() => {
 					setVote(room.activeStory.id, '99+');
 				}}
-				class="btn-icon">99+</button
+				class="btn-icon hover:text-pink-500">99+</button
 			>
 		</div>
 
 		{#if session.user.id === room.owner.id}
 			<div
-				class="card variant-glass-tertiary p-4 m-4 flex flex-auto justify-center items-center space-x-4 flex-wrap"
+				class="card variant-glass-tertiary p-4 m-4 flex flex-auto text-center justify-center items-center space-x-4 flex-wrap"
 			>
 				<button
 					on:click={() => resetStory(room.activeStory.id, storyTextBox)}
-					class="btn variant-filled-secondary btn-base m-2">Reset Story</button
+					class="btn variant-filled-secondary m-2">Reset Story</button
 				>
 				<input
 					type="text"
@@ -178,14 +169,18 @@
 					bind:value={storyTextBox}
 					required
 				/>
-				<SlideToggle
-					on:change={() => {
-						updateStoryVisibility(room.activeStory.id, resultsVisible);
+				<button
+					on:click={() => {
+						updateStoryVisibility(room.activeStory.id, !room.activeStory.visible);
 					}}
-					class="my-auto m-2"
-					name="toggle-visbility"
-					bind:checked={resultsVisible}>{resultsVisible ? 'Hide' : 'Show'}</SlideToggle
+					class="btn variant-filled-secondary m-2"
 				>
+					{#if room.activeStory.visible}
+						<Icon class="text-xl" icon="ph:eye" />
+					{:else}
+						<Icon class="text-xl" icon="ph:eye-closed" />
+					{/if}
+				</button>
 			</div>
 		{/if}
 	</div>
