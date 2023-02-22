@@ -7,6 +7,7 @@
 	import { page } from '$app/stores';
 	import { Toast } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
+	import { version } from '$app/environment';
 </script>
 
 <svelte:head>
@@ -46,7 +47,8 @@
 	<svelte:fragment slot="footer">
 		<div class="text-center m-auto">
 			<p>
-				Built with 💜 by <a href="https://atridad.dev">Atridad Lahiji</a>. Repo can be found
+				v{version} - Built with 💜 by <a href="https://atridad.dev">Atridad Lahiji</a>. Repo can be
+				found
 				<a href="https://github.com/atridadl/sprintpadawan">here</a>.
 			</p>
 		</div>
