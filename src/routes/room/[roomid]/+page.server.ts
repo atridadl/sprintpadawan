@@ -4,13 +4,6 @@ import { VERCEL_ENV } from '$env/static/private';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
-import type { Config } from '@sveltejs/adapter-vercel';
- 
-export const config: Config = {
-  runtime: 'edge',
-  external: ["prisma", "@prisma/client"]
-};
-
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = (async ({ fetch, locals, params }) => {
 	const session: ExtendedSession = (await locals.getSession()) as ExtendedSession;
