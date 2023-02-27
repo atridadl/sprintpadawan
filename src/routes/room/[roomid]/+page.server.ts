@@ -1,8 +1,14 @@
 import type { ExtendedSession } from '$lib/types';
-import type { Room, Story, Vote } from '@prisma/client';
+import type { Vote } from '@prisma/client';
 import { VERCEL_ENV } from '$env/static/private';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+
+import type { Config } from '@sveltejs/adapter-vercel';
+ 
+export const config: Config = {
+  runtime: 'edge'
+};
 
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = (async ({ fetch, locals, params }) => {
