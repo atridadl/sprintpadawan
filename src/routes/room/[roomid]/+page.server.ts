@@ -7,7 +7,8 @@ import { error } from '@sveltejs/kit';
 import type { Config } from '@sveltejs/adapter-vercel';
  
 export const config: Config = {
-  runtime: 'edge'
+  runtime: 'edge',
+  split: true
 };
 
 /** @type {import('./$types').PageServerLoad} */
