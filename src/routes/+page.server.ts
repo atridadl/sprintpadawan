@@ -7,7 +7,7 @@ import type { Config } from '@sveltejs/adapter-vercel';
  
 export const config: Config = {
   runtime: 'edge',
-  external: ["prisma", "@prisma/client"]
+  external: ["prisma"]
 };
 
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
