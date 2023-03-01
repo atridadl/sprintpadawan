@@ -2,7 +2,6 @@ import type { PageServerLoad } from './$types';
 import type { ExtendedSession } from '$lib/types';
 import type { Room } from '@prisma/client';
 import { VERCEL_ENV } from '$env/static/private';
-import type { Config } from '@sveltejs/kit';
 
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
 	const session: ExtendedSession = (await locals.getSession()) as ExtendedSession;
