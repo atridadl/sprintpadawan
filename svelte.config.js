@@ -10,7 +10,9 @@ const pkg = JSON.parse(json);
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter({}),
+		adapter: adapter({
+			split: true
+		}),
 		version: {
 			name: pkg.version
 		}
