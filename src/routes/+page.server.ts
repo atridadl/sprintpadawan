@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import type { ExtendedSession } from '$lib/types';
-import type { Room } from '@prisma/client';
+import type { Room } from '@prisma/client/edge';
 import { VERCEL_ENV } from '$env/static/private';
 import type { Config } from '@sveltejs/kit';
 
