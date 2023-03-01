@@ -2,9 +2,10 @@ import type { PageServerLoad } from './$types';
 import type { ExtendedSession } from '$lib/types';
 import type { Room } from '@prisma/client';
 import { VERCEL_ENV } from '$env/static/private';
+import type { Config } from '@sveltejs/kit';
 
-export const config = {
-	region: 'edge'
+export const config: Config = {
+	runtime: 'edge'
 };
 
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
