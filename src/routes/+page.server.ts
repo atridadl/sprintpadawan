@@ -3,6 +3,10 @@ import type { ExtendedSession } from '$lib/types';
 import type { Room } from '@prisma/client';
 import { VERCEL_ENV } from '$env/static/private';
 
+export const config = {
+	region: 'edge'
+};
+
 export const load: PageServerLoad = (async ({ fetch, locals }) => {
 	const session: ExtendedSession = (await locals.getSession()) as ExtendedSession;
 	const roomsResponse: Response = await fetch('/api/room');

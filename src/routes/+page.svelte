@@ -7,11 +7,6 @@
 	import type { RTEvent } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
 	import { createRoom, deleteRoom } from '$lib/api';
-	import type { Config } from '@sveltejs/kit';
-
-	export const config: Config = {
-		runtime: 'edge'
-	};
 
 	export let data: PageData;
 
