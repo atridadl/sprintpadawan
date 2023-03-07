@@ -22,7 +22,7 @@ export const POST = (async ({ locals, params, request }) => {
 			},
 			data: {
 				name: body.name,
-				userId: session.user.id!,
+				userId: session.user.id,
 				visible: body.visible
 			}
 		});
@@ -35,7 +35,7 @@ export const POST = (async ({ locals, params, request }) => {
 		}
 
 		writeToChannel(`${env}-${story.roomId}`, 'event', {
-			type: 'DB',
+			type: 'STORY',
 			action: 'UPDATE',
 			success: true
 		});

@@ -68,8 +68,8 @@ export const DELETE = (async ({ locals, params }) => {
 		});
 
 		if (deletedRoom) {
-			writeToChannel(`${env}-${session.user.id!}`, 'event', {
-				type: 'DB',
+			writeToChannel(`${env}-${session.user.id}`, 'event', {
+				type: 'ROOM',
 				action: 'DELETE',
 				success: true
 			});

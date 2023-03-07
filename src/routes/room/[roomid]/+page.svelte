@@ -45,12 +45,12 @@
 	};
 
 	onMount(async () => {
-		if (room) {
+		if (room && session) {
 			const { initAbly, subscribeToChannel, enterPresenseSet } = await import('$lib/ably.client');
-			initAbly(session.user.id!);
-			subscribeToChannel(`${env}-${room.id!}`, 'event', true, onRoomEventHandler);
+			initAbly(session.user.id);
+			subscribeToChannel(`${env}-${room.id}`, 'event', true, onRoomEventHandler);
 			storyTextBox = room.activeStory.name;
-			enterPresenseSet(`${env}-${room.id!}`, session.user.name!, session.user.image!);
+			enterPresenseSet(`${env}-${room.id}`, session.user.name, session.user.image);
 			PresenceSet.subscribe((item) => {});
 		}
 	});
@@ -58,7 +58,7 @@
 	onDestroy(async () => {
 		if (room) {
 			const { unsubscribe } = await import('$lib/ably.client');
-			unsubscribe(`${env}-${room.id!}`);
+			unsubscribe(`${env}-${room.id}`);
 		}
 	});
 </script>
@@ -95,12 +95,13 @@
 							<span class="flex-auto">
 								{presenceItem.data.name}:
 								{#if room.activeStory.visible}
-									{#if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
-										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
+									{#if room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)}
+										{room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)
+											.value}
 									{:else}
 										-
 									{/if}
-								{:else if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
+								{:else if room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)}
 									???
 								{:else}
 									-

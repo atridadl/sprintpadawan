@@ -13,7 +13,7 @@ export const GET = (async ({ locals }) => {
 	if (session) {
 		const story = await prisma.story.findFirst({
 			where: {
-				userId: session.user.id!
+				userId: session.user.id
 			}
 		});
 		return new Response(String(JSON.stringify(story)));

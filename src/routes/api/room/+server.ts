@@ -13,7 +13,7 @@ export const GET = (async ({ locals }) => {
 	if (session) {
 		const room = await prisma.room.findMany({
 			where: {
-				userId: session.user.id!
+				userId: session.user.id
 			}
 		});
 		return new Response(String(JSON.stringify(room)));
@@ -27,21 +27,21 @@ export const POST = (async ({ locals }) => {
 	if (session) {
 		const room = await prisma.room.create({
 			data: {
-				userId: session.user.id!
+				userId: session.user.id
 			}
 		});
 		if (room) {
 			const story = await prisma.story.create({
 				data: {
 					name: 'First Story!',
-					userId: session.user.id!,
+					userId: session.user.id,
 					roomId: room.id,
 					visible: false
 				}
 			});
 
-			writeToChannel(`${env}-${session.user.id!}`, 'event', {
-				type: 'DB',
+			writeToChannel(`${env}-${session.user.id}`, 'event', {
+				type: 'ROOM',
 				action: 'ADD',
 				success: true
 			});

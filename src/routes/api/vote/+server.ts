@@ -23,17 +23,17 @@ export const POST = (async ({ locals, request }) => {
 			where: {
 				userId_storyId: {
 					storyId: body.storyId,
-					userId: session.user.id!
+					userId: session.user.id
 				}
 			},
 			create: {
 				value: body.value,
-				userId: session.user.id!,
+				userId: session.user.id,
 				storyId: body.storyId
 			},
 			update: {
 				value: body.value,
-				userId: session.user.id!,
+				userId: session.user.id,
 				storyId: body.storyId
 			},
 			select: {
@@ -52,7 +52,7 @@ export const POST = (async ({ locals, request }) => {
 
 		if (vote) {
 			writeToChannel(`${env}-${vote.story.roomId}`, 'event', {
-				type: 'DB',
+				type: 'VOTE',
 				action: 'UPDATE',
 				success: !!vote
 			});
