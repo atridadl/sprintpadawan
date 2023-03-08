@@ -1,7 +1,6 @@
 import { page } from '$app/stores';
 
 export const getRooms = async () => {
-	console.log(page);
 	return await fetch('/api/room');
 };
 
@@ -61,5 +60,11 @@ export const updateStoryVisibility = async (storyId: string, visible: boolean) =
 		body: JSON.stringify({
 			visible
 		})
+	});
+};
+
+export const deleteUser = async () => {
+	await fetch('/api/user', {
+		method: 'DELETE'
 	});
 };

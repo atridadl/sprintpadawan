@@ -2,12 +2,35 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import { AppShell, AppBar, Avatar } from '@skeletonlabs/skeleton';
+	import {
+		AppShell,
+		AppBar,
+		Avatar,
+		type ModalSettings,
+		type ModalComponent
+	} from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { Toast } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { version } from '$app/environment';
+	import { Modal, modalStore } from '@skeletonlabs/skeleton';
+	import ProfileModal from '$lib/components/ProfileModal.svelte';
+
+	const openProfileModal = () => {
+		if ($page.data.session) {
+			const profileModalComponent: ModalComponent = {
+				ref: ProfileModal,
+				props: { user: $page.data.session.user }
+			};
+
+			const alert: ModalSettings = {
+				type: 'component',
+				component: profileModalComponent
+			};
+			modalStore.trigger(alert);
+		}
+	};
 </script>
 
 <svelte:head>
@@ -17,6 +40,7 @@
 
 <AppShell>
 	<Toast />
+	<Modal />
 	<svelte:fragment slot="header">
 		<AppBar background="bg-surface">
 			<svelte:fragment slot="lead">
@@ -33,7 +57,13 @@
 				{#if $page.data.session}
 					{#if $page.route.id === '/'}
 						<button on:click={signOut}>Logout</button>
-						<Avatar width="w-10" src={$page.data.session.user?.image || ''} />
+						<Avatar
+							on:click={openProfileModal}
+							width="w-10"
+							border="border-2 border-surface-300-600-token hover:!border-primary-500"
+							cursor="cursor-pointer"
+							src={$page.data.session.user?.image || ''}
+						/>
 					{:else}
 						<a href="/" class="btn hover:text-pink-500 text-lg" data-sveltekit-preload-data="hover">
 							<Icon icon="material-symbols:arrow-back-rounded" /> Back
