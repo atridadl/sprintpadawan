@@ -68,14 +68,14 @@
 		if (session) {
 			const { initAbly, subscribeToChannel } = await import('$lib/ably.client');
 			initAbly(session.user.id!);
-			subscribeToChannel(`${env}-${session.user.id!}`, 'event', true, onUserEventHandler);
+			subscribeToChannel(`${env}-${session.user.id}`, 'event', true, onUserEventHandler);
 		}
 	});
 
 	onDestroy(async () => {
 		if (session) {
 			const { unsubscribe } = await import('$lib/ably.client');
-			unsubscribe(`${env}-${session.user.id!}`);
+			unsubscribe(`${env}-${session.user.id}`);
 		}
 	});
 </script>
@@ -88,7 +88,7 @@
 	{:else}
 		<div>
 			{#if session}
-				<h1>Hi, {session.user?.name}!</h1>
+				<h1>Hi, {session.user.name}!</h1>
 
 				<h3>Join a room!</h3>
 				<label class="input-label">

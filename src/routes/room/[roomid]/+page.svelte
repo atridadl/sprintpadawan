@@ -19,11 +19,18 @@
 	let storyTextBox: string = '';
 
 	const shareRoomUrlHandler = () => {
-		navigator.share({
-			url: window.location.href,
-			text: 'Join my Sprint Padawan room!',
-			title: 'Sprint Padawan'
-		});
+		navigator
+			.share({
+				url: window.location.href,
+				text: 'Join my Sprint Padawan room!',
+				title: 'Sprint Padawan'
+			})
+			.then(() => {
+				console.log('Room Shared!');
+			})
+			.catch(() => {
+				console.log('Room Share Cancelled');
+			});
 	};
 
 	const copyRoomUrlHandler = () => {
@@ -45,12 +52,12 @@
 	};
 
 	onMount(async () => {
-		if (room) {
+		if (room && session) {
 			const { initAbly, subscribeToChannel, enterPresenseSet } = await import('$lib/ably.client');
-			initAbly(session.user.id!);
-			subscribeToChannel(`${env}-${room.id!}`, 'event', true, onRoomEventHandler);
+			initAbly(session.user.id);
+			subscribeToChannel(`${env}-${room.id}`, 'event', true, onRoomEventHandler);
 			storyTextBox = room.activeStory.name;
-			enterPresenseSet(`${env}-${room.id!}`, session.user.name!, session.user.image!);
+			enterPresenseSet(`${env}-${room.id}`, session.user.name, session.user.image);
 			PresenceSet.subscribe((item) => {});
 		}
 	});
@@ -58,7 +65,7 @@
 	onDestroy(async () => {
 		if (room) {
 			const { unsubscribe } = await import('$lib/ably.client');
-			unsubscribe(`${env}-${room.id!}`);
+			unsubscribe(`${env}-${room.id}`);
 		}
 	});
 </script>
@@ -95,12 +102,13 @@
 							<span class="flex-auto">
 								{presenceItem.data.name}:
 								{#if room.activeStory.visible}
-									{#if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
-										{room.activeStory.votes.find((v) => v.userId == presenceItem.clientId).value}
+									{#if room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)}
+										{room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)
+											.value}
 									{:else}
 										-
 									{/if}
-								{:else if room.activeStory.votes.find((v) => v.userId == presenceItem.clientId)}
+								{:else if room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)}
 									???
 								{:else}
 									-
@@ -158,10 +166,6 @@
 			<div
 				class="card variant-glass-tertiary p-4 m-4 flex flex-auto text-center justify-center items-center space-x-4 flex-wrap"
 			>
-				<button
-					on:click={() => resetStory(room.activeStory.id, storyTextBox)}
-					class="btn variant-filled-secondary m-2">Reset Story</button
-				>
 				<input
 					type="text"
 					id="story"
@@ -176,11 +180,19 @@
 					class="btn variant-filled-secondary m-2"
 				>
 					{#if room.activeStory.visible}
-						<Icon class="text-xl" icon="ph:eye" />
+						<Icon class="text-xl mr-2" icon="ph:eye" />
+						Visible
 					{:else}
-						<Icon class="text-xl" icon="ph:eye-closed" />
+						<Icon class="text-xl mr-2" icon="ph:eye-closed" />
+						Hidden
 					{/if}
 				</button>
+
+				<button
+					on:click={() => resetStory(room.activeStory.id, storyTextBox)}
+					disabled={storyTextBox === room.activeStory.name}
+					class="btn variant-filled-secondary m-2">Save Story</button
+				>
 			</div>
 		{/if}
 	</div>
