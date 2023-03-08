@@ -9,7 +9,7 @@
 	const onDeleteHandler = async () => {
 		modalStore.close();
 		await deleteUser();
-		await signOut();
+		location.reload();
 	};
 
 	const onCancelHandler = async () => {
