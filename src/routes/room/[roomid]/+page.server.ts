@@ -19,7 +19,7 @@ export const load: PageServerLoad = (async ({ fetch, locals, params }) => {
 	return {
 		session,
 		room,
-		vote: room.activeStory.votes.find((vote: Vote) => vote.userId === session.user.id),
+		vote: room.activeStory.votes.find((vote: Vote) => vote.userId === session.user.id) as Vote,
 		env: VERCEL_ENV ? VERCEL_ENV : 'local'
 	};
 }) satisfies PageServerLoad;
