@@ -9,8 +9,8 @@ specifiers:
   '@prisma/client': ^4.11.0
   '@skeletonlabs/skeleton': ^0.124.2
   '@sveltejs/adapter-auto': ^2.0.0
-  '@sveltejs/adapter-vercel': ^2.3.0
-  '@sveltejs/kit': ^1.10.0
+  '@sveltejs/adapter-vercel': ^2.3.1
+  '@sveltejs/kit': ^1.11.0
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
   '@typescript-eslint/eslint-plugin': ^5.54.1
@@ -35,7 +35,7 @@ specifiers:
 
 dependencies:
   '@auth/core': 0.5.0
-  '@auth/sveltekit': 0.2.2_nbkxm6775dsnyd2fz5a5r4uvyi
+  '@auth/sveltekit': 0.2.2_exf4tefbq3msfml2leeazdfklu
   '@next-auth/prisma-adapter': 1.0.5_@prisma+client@4.11.0
   '@prisma/client': 4.11.0_prisma@4.11.0
   ably: 1.2.37
@@ -45,9 +45,9 @@ devDependencies:
   '@iconify/svelte': 3.1.0_svelte@3.55.1
   '@playwright/test': 1.31.2
   '@skeletonlabs/skeleton': 0.124.2
-  '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.10.0
-  '@sveltejs/adapter-vercel': 2.3.0_@sveltejs+kit@1.10.0
-  '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+  '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.11.0
+  '@sveltejs/adapter-vercel': 2.3.1_@sveltejs+kit@1.11.0
+  '@sveltejs/kit': 1.11.0_svelte@3.55.1+vite@4.1.4
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.7
   '@typescript-eslint/eslint-plugin': 5.54.1_mlk7dnz565t663n4razh6a6v6i
@@ -108,14 +108,14 @@ packages:
       preact-render-to-string: 5.2.3_preact@10.11.3
     dev: false
 
-  /@auth/sveltekit/0.2.2_nbkxm6775dsnyd2fz5a5r4uvyi:
+  /@auth/sveltekit/0.2.2_exf4tefbq3msfml2leeazdfklu:
     resolution: {integrity: sha512-8PL1120J22RrmsGu8VXTeUvTldSNRqvs/hhEsx9DYswdS5o4umhXsJI5JDbBS3hzpuq7i4LgVEOueW7zQgn9dg==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
       svelte: ^3.54.0
     dependencies:
       '@auth/core': 0.4.0
-      '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+      '@sveltejs/kit': 1.11.0_svelte@3.55.1+vite@4.1.4
       svelte: 3.55.1
     transitivePeerDependencies:
       - nodemailer
@@ -475,21 +475,21 @@ packages:
       svelte: 3.55.1
     dev: true
 
-  /@sveltejs/adapter-auto/2.0.0_@sveltejs+kit@1.10.0:
+  /@sveltejs/adapter-auto/2.0.0_@sveltejs+kit@1.11.0:
     resolution: {integrity: sha512-b+gkHFZgD771kgV3aO4avHFd7y1zhmMYy9i6xOK7m/rwmwaRO8gnF5zBc0Rgca80B2PMU1bKNxyBTHA14OzUAQ==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+      '@sveltejs/kit': 1.11.0_svelte@3.55.1+vite@4.1.4
       import-meta-resolve: 2.2.1
     dev: true
 
-  /@sveltejs/adapter-vercel/2.3.0_@sveltejs+kit@1.10.0:
-    resolution: {integrity: sha512-LvSO/jO0rO2tFGNZhNtgzNniMobZmTXho83PouDgjKS3hW9CvIsn80RlRwT/Ay5Tag+kCHb0jViFuWktR9/OVw==}
+  /@sveltejs/adapter-vercel/2.3.1_@sveltejs+kit@1.11.0:
+    resolution: {integrity: sha512-EanZoRgqaZw4EaT3yGbkUtswYW3cQFVL/7aRunbiZ86mmDEyn6liuYNpmMCiqhgnz6hwhfJErpR7p8l71zcKRA==}
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+      '@sveltejs/kit': 1.11.0_svelte@3.55.1+vite@4.1.4
       '@vercel/nft': 0.22.6
       esbuild: 0.16.17
     transitivePeerDependencies:
@@ -497,8 +497,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.10.0_svelte@3.55.1+vite@4.1.4:
-    resolution: {integrity: sha512-0P35zHrByfbF3Ym3RdQL+RvzgsCDSyO3imSwuZ67XAD5HoCQFF3a8Mhh0V3sObz3rc5aJd4Qn82UpAihJqZ6gQ==}
+  /@sveltejs/kit/1.11.0_svelte@3.55.1+vite@4.1.4:
+    resolution: {integrity: sha512-PwViZcMoLgEU/jhLoSyjf5hSrHS67wvSm0ifBo4prP9irpGa5HuPOZeVDTL5tPDSBoKxtdYi1zlGdoiJfO86jA==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
@@ -965,7 +965,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.5
-      caniuse-lite: 1.0.30001462
+      caniuse-lite: 1.0.30001464
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1019,8 +1019,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001462
-      electron-to-chromium: 1.4.323
+      caniuse-lite: 1.0.30001464
+      electron-to-chromium: 1.4.326
       node-releases: 2.0.10
       update-browserslist-db: 1.0.10_browserslist@4.21.5
     dev: true
@@ -1072,8 +1072,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /caniuse-lite/1.0.30001462:
-    resolution: {integrity: sha512-PDd20WuOBPiasZ7KbFnmQRyuLE7cFXW2PVd7dmALzbkUXEP46upAuCDm9eY9vho8fgNMGmbAX92QBZHzcnWIqw==}
+  /caniuse-lite/1.0.30001464:
+    resolution: {integrity: sha512-oww27MtUmusatpRpCGSOneQk2/l5czXANDSFvsc7VuOQ86s3ANhZetpwXNf1zY/zdfP63Xvjz325DAdAoES13g==}
     dev: true
 
   /chai/4.3.7:
@@ -1278,8 +1278,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron-to-chromium/1.4.323:
-    resolution: {integrity: sha512-+a0hMEQxE8u1F1vOHcE0M18kQ2+4AwOXdRrU4avZ1LeR/sa9WAallYE3uES/PNcEGt/wCFcOgWcArSLx5C+WNQ==}
+  /electron-to-chromium/1.4.326:
+    resolution: {integrity: sha512-tFNZP7VlGDp88vR7TYQ/h5svw8lzfu44PU5tfDJ+JYdcsEuWv4GpEm7hOF3c4Z/o4QQ6lNxmlGtvGaBVMRM9uQ==}
     dev: true
 
   /emoji-regex/8.0.0:
@@ -2445,8 +2445,8 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup/3.18.0:
-    resolution: {integrity: sha512-J8C6VfEBjkvYPESMQYxKHxNOh4A5a3FlP+0BETGo34HEcE4eTlgCrO2+eWzlu2a/sHs2QUkZco+wscH7jhhgWg==}
+  /rollup/3.19.0:
+    resolution: {integrity: sha512-xZzJZlH9Ca6cosfdNGPwl2z7Pby8dTi9TrYLPeg6/j7aUoDOhBd706tCUFvbiBj45h/cS7z/a4gS8xd5Yg0jBw==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -2953,7 +2953,7 @@ packages:
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.1
-      rollup: 3.18.0
+      rollup: 3.19.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -2986,7 +2986,7 @@ packages:
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.1
-      rollup: 3.18.0
+      rollup: 3.19.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true

@@ -14,8 +14,6 @@ export const load: PageServerLoad = (async ({ fetch, locals, params }) => {
 		throw error(404, 'This is not the room you are looking for...');
 	}
 
-	console.log(room.activeStory.votes.find((vote: Vote) => vote.userId === session.user.id));
-
 	return {
 		session,
 		room,
