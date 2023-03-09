@@ -51,6 +51,16 @@
 		}
 	};
 
+	const getVoteButtonStyle = (target: string) => {
+		if (!vote) {
+			return 'btn-icon variant-ghost-tertiary';
+		} else if (vote.value === target) {
+			return 'btn-icon variant-ghost-primary';
+		} else {
+			return 'btn-icon variant-ghost-primary';
+		}
+	};
+
 	onMount(async () => {
 		if (room && session) {
 			const { initAbly, subscribeToChannel, enterPresenseSet } = await import('$lib/ably.client');
@@ -126,7 +136,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '0.5');
 					}}
-					class={vote.value === '0.5'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '0.5'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>0.5</button
 				>
@@ -134,7 +146,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '1');
 					}}
-					class={vote.value === '1'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '1'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>1</button
 				>
@@ -142,7 +156,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '2');
 					}}
-					class={vote.value === '2'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '2'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>2</button
 				>
@@ -150,7 +166,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '3');
 					}}
-					class={vote.value === '3'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '3'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>3</button
 				>
@@ -158,7 +176,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '5');
 					}}
-					class={vote.value === '5'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '5'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>5</button
 				>
@@ -166,7 +186,9 @@
 					on:click={() => {
 						setVote(room.activeStory.id, '99+');
 					}}
-					class={vote.value === '99+'
+					class={!vote
+						? 'btn-icon variant-ghost-tertiary'
+						: vote.value === '99+'
 						? 'btn-icon variant-ghost-primary'
 						: 'btn-icon variant-ghost-tertiary'}>99+</button
 				>
