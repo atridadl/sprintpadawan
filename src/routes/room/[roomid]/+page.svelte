@@ -118,48 +118,59 @@
 					{/each}
 				{/if}
 			</ul>
-		</div>
-		<div
-			class="card variant-glass-tertiary p-4 m-4 flex justify-center items-center space-x-4 flex-wrap"
-		>
-			<p>Vote:</p>
 
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '0.5');
-				}}
-				class="btn-icon hover:text-pink-500">0.5</button
-			>
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '1');
-				}}
-				class="btn-icon hover:text-pink-500">1</button
-			>
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '2');
-				}}
-				class="btn-icon hover:text-pink-500">2</button
-			>
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '3');
-				}}
-				class="btn-icon hover:text-pink-500">3</button
-			>
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '5');
-				}}
-				class="btn-icon hover:text-pink-500">5</button
-			>
-			<button
-				on:click={() => {
-					setVote(room.activeStory.id, '99+');
-				}}
-				class="btn-icon hover:text-pink-500">99+</button
-			>
+			<span class="h-1 w-full bg-cyan-200 lg:w-1/3 rounded my-4" />
+
+			<div class="flex gap-4 flex-wrap items-center justify-center">
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '0.5');
+					}}
+					class={vote.value === '0.5'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>0.5</button
+				>
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '1');
+					}}
+					class={vote.value === '1'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>1</button
+				>
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '2');
+					}}
+					class={vote.value === '2'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>2</button
+				>
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '3');
+					}}
+					class={vote.value === '3'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>3</button
+				>
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '5');
+					}}
+					class={vote.value === '5'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>5</button
+				>
+				<button
+					on:click={() => {
+						setVote(room.activeStory.id, '99+');
+					}}
+					class={vote.value === '99+'
+						? 'btn-icon variant-ghost-primary'
+						: 'btn-icon variant-ghost-tertiary'}>99+</button
+				>
+			</div>
 		</div>
 
 		{#if session.user.id === room.owner.id}
