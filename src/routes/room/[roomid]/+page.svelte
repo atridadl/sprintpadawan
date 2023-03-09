@@ -102,8 +102,6 @@
 		>
 			<h3>Current Story: {room.activeStory.name}</h3>
 
-			<p>Your Vote: {vote ? vote.value : '-'}</p>
-
 			<ul class="list">
 				{#if $PresenceSet}
 					{#each $PresenceSet as presenceItem}
