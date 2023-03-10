@@ -77,9 +77,13 @@
 	<svelte:fragment slot="footer">
 		<div class="text-center m-auto">
 			<p>
-				v{version} - Built with 💜 by <a href="https://atridad.dev">Atridad Lahiji</a>. Repo can be
-				found
-				<a href="https://github.com/atridadl/sprintpadawan">here</a>.
+				Version
+				<a
+					href={`https://github.com/atridadl/sprintpadawan/releases/tag/${version}`}
+					target="_blank"
+					rel="noreferrer">{version}</a
+				>
+				- Built with 💜 by <a href="https://atridad.dev">Atridad Lahiji</a>
 			</p>
 		</div>
 	</svelte:fragment>
