@@ -111,7 +111,7 @@
 										{room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)
 											.value}
 									{:else}
-										<Icon class="text-2xl mx-1 inline-block" icon="ic:round-hourglass-empty" />
+										<Icon class="text-2xl mx-1 inline-block" icon="tabler:error-404" />
 									{/if}
 								{:else if room.activeStory.votes.find((vote) => vote.userId == presenceItem.clientId)}
 									<Icon
@@ -129,7 +129,7 @@
 					{/each}
 				</ul>
 
-				<span class="h-1 w-full bg-cyan-200 lg:w-1/3 rounded my-4" />
+				<span class="h-1 w-full bg-cyan-200 rounded my-4" />
 
 				<div class="flex gap-4 flex-wrap items-center justify-center">
 					<button
@@ -194,9 +194,12 @@
 					>
 				</div>
 			{:else}
-				<div class="w-10">
-					<ProgressRadial stroke={150} meter="stroke-primary-500" track="stroke-primary-500/30" />
-				</div>
+				<ProgressRadial
+					stroke={150}
+					width={'w-10'}
+					meter="stroke-primary-500"
+					track="stroke-primary-500/30"
+				/>
 			{/if}
 		</div>
 

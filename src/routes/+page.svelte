@@ -82,9 +82,12 @@
 
 <div class="container h-full mx-auto flex flex-col justify-center items-center text-center">
 	{#if pageLoading}
-		<div class="w-10">
-			<ProgressRadial stroke={150} meter="stroke-primary-500" track="stroke-primary-500/30" />
-		</div>
+		<ProgressRadial
+			stroke={150}
+			width={'w-10'}
+			meter="stroke-primary-500"
+			track="stroke-primary-500/30"
+		/>
 	{:else}
 		<div>
 			{#if session}
