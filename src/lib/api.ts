@@ -1,5 +1,3 @@
-import { page } from '$app/stores';
-
 export const getRooms = async () => {
 	return await fetch('/api/room');
 };

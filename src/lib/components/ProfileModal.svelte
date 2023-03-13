@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { deleteUser } from '$lib/api';
-	import { signOut } from '@auth/sveltekit/client';
 	import type { User } from '@prisma/client';
 	import { Avatar, modalStore } from '@skeletonlabs/skeleton';
 

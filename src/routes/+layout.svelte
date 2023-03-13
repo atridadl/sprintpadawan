@@ -11,7 +11,6 @@
 	} from '@skeletonlabs/skeleton';
 	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-	import { Toast } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { version } from '$app/environment';
 	import { Modal, modalStore } from '@skeletonlabs/skeleton';
@@ -39,7 +38,6 @@
 </svelte:head>
 
 <AppShell>
-	<Toast />
 	<Modal />
 	<svelte:fragment slot="header">
 		<AppBar background="bg-surface">
