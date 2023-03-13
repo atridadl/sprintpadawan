@@ -213,11 +213,11 @@
 						class="btn variant-filled-secondary m-2"
 					>
 						{#if room.activeStory.visible}
-							<Icon class="text-xl mr-2" icon="ph:eye" />
-							Visible
-						{:else}
 							<Icon class="text-xl mr-2" icon="ph:eye-closed" />
-							Hidden
+							Hide
+						{:else}
+							<Icon class="text-xl mr-2" icon="ph:eye" />
+							Show
 						{/if}
 					</button>
 
