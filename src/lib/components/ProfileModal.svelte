@@ -1,14 +1,42 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { deleteUser } from '$lib/api';
+	import { signOut } from '@auth/sveltekit/client';
+	import Icon from '@iconify/svelte';
 	import type { User } from '@prisma/client';
-	import { Avatar, modalStore } from '@skeletonlabs/skeleton';
+	import { Avatar, modalStore, popup } from '@skeletonlabs/skeleton';
+	import type { PopupSettings } from '@skeletonlabs/skeleton';
+
+	const deleteTooltipSettings: PopupSettings = {
+		event: 'hover',
+		target: 'deleteTooltip',
+		placement: 'top'
+	};
+
+	const signOutTooltipSettings: PopupSettings = {
+		event: 'hover',
+		target: 'signOutTooltip',
+		placement: 'top'
+	};
+
+	const closeTooltipSettings: PopupSettings = {
+		event: 'hover',
+		target: 'closeTooltip',
+		placement: 'top'
+	};
 
 	export let user: User;
 
 	const onDeleteHandler = async () => {
 		modalStore.close();
 		await deleteUser();
-		location.reload();
+		invalidateAll();
+	};
+
+	const onLogoutHandler = async () => {
+		modalStore.close();
+		await signOut();
+		invalidateAll();
 	};
 
 	const onCancelHandler = async () => {
@@ -58,10 +86,41 @@
 		{/if}
 		{#if user}
 			<div>
-				<button on:click={onDeleteHandler} class="btn variant-filled-error m-2"
-					>Delete Account</button
+				<div class="card variant-filled-secondary p-4" data-popup="deleteTooltip">
+					Delete
+					<div class="arrow variant-filled-secondary" />
+				</div>
+				<button
+					use:popup={deleteTooltipSettings}
+					on:click={onDeleteHandler}
+					class="btn variant-filled-error m-2"
 				>
-				<button on:click={onCancelHandler} class="btn variant-filled-tertiary m-2">Close</button>
+					<Icon class="text-2xl" icon="octicon:trash-16" />
+				</button>
+
+				<div class="card variant-filled-secondary p-4" data-popup="signOutTooltip">
+					Sign Out
+					<div class="arrow variant-filled-secondary" />
+				</div>
+				<button
+					use:popup={signOutTooltipSettings}
+					on:click={signOut}
+					class="btn variant-ghost-primary m-2"
+				>
+					<Icon class="text-2xl" icon="majesticons:logout-line" />
+				</button>
+
+				<div class="card variant-filled-secondary p-4" data-popup="closeTooltip">
+					Close
+					<div class="arrow variant-filled-secondary" />
+				</div>
+				<button
+					use:popup={closeTooltipSettings}
+					on:click={onCancelHandler}
+					class="btn variant-ghost m-2"
+				>
+					<Icon class="text-2xl" icon="ic:round-close" />
+				</button>
 			</div>
 		{/if}
 	</div>

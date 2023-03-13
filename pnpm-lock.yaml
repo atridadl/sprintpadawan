@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@auth/core': 0.5.1
   '@auth/sveltekit': 0.3.0
+  '@floating-ui/dom': ^1.2.4
   '@iconify/svelte': ^3.1.0
   '@next-auth/prisma-adapter': ^1.0.5
   '@playwright/test': ^1.31.2
@@ -36,6 +37,7 @@ specifiers:
 dependencies:
   '@auth/core': 0.5.1
   '@auth/sveltekit': 0.3.0_ogfxsxjh6xxx4tc3shre4t4i3u
+  '@floating-ui/dom': 1.2.4
   '@next-auth/prisma-adapter': 1.0.5_@prisma+client@4.11.0
   '@prisma/client': 4.11.0_prisma@4.11.0
   ably: 1.2.37
@@ -317,6 +319,16 @@ packages:
     resolution: {integrity: sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@floating-ui/core/1.2.3:
+    resolution: {integrity: sha512-upVRtrNZuYNsw+EoxkiBFRPROnU8UTy/u/dZ9U0W14BlemPYODwhhxYXSR2Y9xOnvr1XtptJRWx7gL8Te1qaog==}
+    dev: false
+
+  /@floating-ui/dom/1.2.4:
+    resolution: {integrity: sha512-4+k+BLhtWj+peCU60gp0+rHeR8+Ohqx6kjJf/lHMnJ8JD5Qj6jytcq1+SZzRwD7rvHKRhR7TDiWWddrNrfwQLg==}
+    dependencies:
+      '@floating-ui/core': 1.2.3
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
