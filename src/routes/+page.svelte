@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
 	import { signIn } from '@auth/sveltekit/client';
-	import { toastStore, ProgressRadial, type ToastSettings } from '@skeletonlabs/skeleton';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import type { RTEvent } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
 	import { createRoom, deleteRoom } from '$lib/api';
@@ -23,42 +23,10 @@
 			await goto(`/room/${roomId}`).then(() => {
 				pageLoading = false;
 			});
-		} else {
-			const t: ToastSettings = {
-				message: 'Please enter a Room ID.',
-				preset: 'error',
-				autohide: true,
-				timeout: 4000
-			};
-
-			toastStore.trigger(t);
 		}
 	};
 
 	const onUserEventHandler = async (eventData: RTEvent) => {
-		let messageString = '';
-
-		if (eventData.action === 'ADD') {
-			messageString = eventData.success
-				? '🙌🏽 Your room has been created!'
-				: 'Uh-oh! Something went wrong!';
-		} else if (eventData.action === 'DELETE') {
-			messageString = eventData.success
-				? '🙌🏽 Your room has been deleted!'
-				: 'Uh-oh! Something went wrong!';
-		} else {
-			messageString = 'Error communicating with event backend.';
-		}
-
-		const t: ToastSettings = {
-			message: messageString,
-			preset: eventData.success ? 'success' : 'error',
-			autohide: true,
-			timeout: 4000
-		};
-
-		toastStore.trigger(t);
-
 		if (eventData.success) {
 			invalidateAll();
 		}
@@ -67,7 +35,7 @@
 	onMount(async () => {
 		if (session) {
 			const { initAbly, subscribeToChannel } = await import('$lib/ably.client');
-			initAbly(session.user.id!);
+			initAbly(session.user.id);
 			subscribeToChannel(`${env}-${session.user.id}`, 'event', true, onUserEventHandler);
 		}
 	});

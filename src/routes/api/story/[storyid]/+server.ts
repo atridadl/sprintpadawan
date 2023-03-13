@@ -26,7 +26,7 @@ export const POST = (async ({ locals, params, request }) => {
 				visible: body.visible
 			}
 		});
-		if (!!body.name) {
+		if (body.name) {
 			await prisma.vote.deleteMany({
 				where: {
 					storyId: story.id

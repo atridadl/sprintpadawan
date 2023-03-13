@@ -31,7 +31,7 @@ export const POST = (async ({ locals }) => {
 			}
 		});
 		if (room) {
-			const story = await prisma.story.create({
+			await prisma.story.create({
 				data: {
 					name: 'First Story!',
 					userId: session.user.id,

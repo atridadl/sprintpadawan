@@ -30,8 +30,8 @@ export const handle: Handle = sequence(
 		providers: [GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET })],
 		adapter: PrismaAdapter(prisma),
 		callbacks: {
-			session({ session, token, user }) {
-				if (session?.user) {
+			session({ session, user }) {
+				if (session.user && session.user.email && session.user.name && session.user.image) {
 					const extendedSession: ExtendedSession = {
 						expires: session.expires,
 						user: {

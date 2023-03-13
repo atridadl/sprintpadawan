@@ -9,13 +9,15 @@
 		type ModalSettings,
 		type ModalComponent
 	} from '@skeletonlabs/skeleton';
-	import { signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-	import { Toast } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { version } from '$app/environment';
 	import { Modal, modalStore } from '@skeletonlabs/skeleton';
 	import ProfileModal from '$lib/components/ProfileModal.svelte';
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
+
+	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	const openProfileModal = () => {
 		if ($page.data.session) {
@@ -39,7 +41,6 @@
 </svelte:head>
 
 <AppShell>
-	<Toast />
 	<Modal />
 	<svelte:fragment slot="header">
 		<AppBar background="bg-surface">
@@ -56,7 +57,6 @@
 			<svelte:fragment slot="trail">
 				{#if $page.data.session}
 					{#if $page.route.id === '/'}
-						<button on:click={signOut}>Logout</button>
 						<Avatar
 							on:click={openProfileModal}
 							width="w-10"

@@ -20,8 +20,8 @@ export const initAbly = (clientId: string) => {
 export const subscribeToChannel = async (
 	channel: string,
 	event: string,
-	presence: boolean = false,
-	eventCallback: Function
+	presence = false,
+	eventCallback: (eventData: RTEvent) => void
 ) => {
 	if (ably) {
 		const eventChannel = ably.channels.get(channel);
@@ -37,11 +37,11 @@ export const subscribeToChannel = async (
 			});
 
 			if (presence) {
-				await eventChannel.presence.subscribe(['enter', 'leave', 'update'], (message) => {
+				await eventChannel.presence.subscribe(['enter', 'leave', 'update'], () => {
 					eventChannel.presence.get((err, members) => {
 						if (members) {
 							console.log(members);
-							PresenceSet.update((currentSet) => {
+							PresenceSet.update(() => {
 								return [...new Map(members.map((member) => [member.clientId, member])).values()];
 							});
 						}
