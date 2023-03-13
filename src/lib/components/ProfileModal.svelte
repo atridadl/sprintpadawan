@@ -45,6 +45,13 @@
 </script>
 
 <div class="card p-4 w-modal-slim shadow-xl space-y-4">
+	<div class="card variant-filled-secondary p-4 float-right" data-popup="closeTooltip">
+		Close
+		<div class="arrow variant-filled-secondary" />
+	</div>
+	<button use:popup={closeTooltipSettings} on:click={onCancelHandler} class="btn float-right">
+		<Icon class="text-2xl" icon="ic:round-close" />
+	</button>
 	<div
 		class="container h-full mx-auto flex flex-col justify-center items-center text-center flex-wrap gap-2"
 	>
@@ -108,18 +115,6 @@
 					class="btn variant-ghost-primary m-2"
 				>
 					<Icon class="text-2xl" icon="majesticons:logout-line" />
-				</button>
-
-				<div class="card variant-filled-secondary p-4" data-popup="closeTooltip">
-					Close
-					<div class="arrow variant-filled-secondary" />
-				</div>
-				<button
-					use:popup={closeTooltipSettings}
-					on:click={onCancelHandler}
-					class="btn variant-ghost m-2"
-				>
-					<Icon class="text-2xl" icon="ic:round-close" />
 				</button>
 			</div>
 		{/if}
