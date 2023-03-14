@@ -113,7 +113,7 @@
 				</div>
 				<button
 					use:popup={signOutTooltipSettings}
-					on:click={signOut}
+					on:click={onLogoutHandler}
 					class="btn variant-ghost-primary m-2"
 				>
 					<Fa class="text-xl" icon={faSignOut} />
