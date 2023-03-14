@@ -16,7 +16,6 @@
 		"upgrade": "pnpm update --latest"
 	},
 	"devDependencies": {
-		"@iconify/svelte": "^3.1.0",
 		"@playwright/test": "^1.31.2",
 		"@skeletonlabs/skeleton": "^1.0.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -47,9 +46,13 @@
 		"@auth/core": "0.5.1",
 		"@auth/sveltekit": "0.3.0",
 		"@floating-ui/dom": "^1.2.4",
+		"@fortawesome/free-brands-svg-icons": "^6.3.0",
+		"@fortawesome/free-regular-svg-icons": "^6.3.0",
+		"@fortawesome/free-solid-svg-icons": "^6.3.0",
 		"@next-auth/prisma-adapter": "^1.0.5",
 		"@prisma/client": "^4.11.0",
 		"ably": "^1.2.37",
-		"prisma": "^4.11.0"
+		"prisma": "^4.11.0",
+		"svelte-fa": "^3.0.3"
 	}
 }
