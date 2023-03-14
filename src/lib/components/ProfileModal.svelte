@@ -6,11 +6,8 @@
 	import { Avatar, modalStore, popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import Fa from 'svelte-fa';
-	import {
-		faArrowAltCircleRight,
-		faCircleXmark,
-		faTrashCan
-	} from '@fortawesome/free-regular-svg-icons';
+	import { faCircleXmark, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+	import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 	const deleteTooltipSettings: PopupSettings = {
 		event: 'hover',
@@ -55,7 +52,7 @@
 		<div class="arrow variant-filled-secondary" />
 	</div>
 	<button use:popup={closeTooltipSettings} on:click={onCancelHandler} class="btn float-right">
-		<Fa icon={faCircleXmark} />
+		<Fa class="text-xl" icon={faCircleXmark} />
 	</button>
 	<div
 		class="container h-full mx-auto flex flex-col justify-center items-center text-center flex-wrap gap-2"
@@ -107,7 +104,7 @@
 					on:click={onDeleteHandler}
 					class="btn variant-filled-error m-2"
 				>
-					<Fa icon={faTrashCan} />
+					<Fa class="text-xl" icon={faTrashCan} />
 				</button>
 
 				<div class="card variant-filled-secondary p-4" data-popup="signOutTooltip">
@@ -119,7 +116,7 @@
 					on:click={signOut}
 					class="btn variant-ghost-primary m-2"
 				>
-					<Fa icon={faArrowAltCircleRight} />
+					<Fa class="text-xl" icon={faSignOut} />
 				</button>
 			</div>
 		{/if}
