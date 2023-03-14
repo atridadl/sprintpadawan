@@ -2,10 +2,12 @@
 	import { invalidateAll } from '$app/navigation';
 	import { deleteUser } from '$lib/api';
 	import { signOut } from '@auth/sveltekit/client';
-	import Icon from '@iconify/svelte';
 	import type { User } from '@prisma/client';
 	import { Avatar, modalStore, popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
+	import Fa from 'svelte-fa';
+	import { faCircleXmark, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+	import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 	const deleteTooltipSettings: PopupSettings = {
 		event: 'hover',
@@ -50,7 +52,7 @@
 		<div class="arrow variant-filled-secondary" />
 	</div>
 	<button use:popup={closeTooltipSettings} on:click={onCancelHandler} class="btn float-right">
-		<Icon class="text-2xl" icon="ic:round-close" />
+		<Fa class="text-xl" icon={faCircleXmark} />
 	</button>
 	<div
 		class="container h-full mx-auto flex flex-col justify-center items-center text-center flex-wrap gap-2"
@@ -102,7 +104,7 @@
 					on:click={onDeleteHandler}
 					class="btn variant-filled-error m-2"
 				>
-					<Icon class="text-2xl" icon="octicon:trash-16" />
+					<Fa class="text-xl" icon={faTrashCan} />
 				</button>
 
 				<div class="card variant-filled-secondary p-4" data-popup="signOutTooltip">
@@ -111,10 +113,10 @@
 				</div>
 				<button
 					use:popup={signOutTooltipSettings}
-					on:click={signOut}
+					on:click={onLogoutHandler}
 					class="btn variant-ghost-primary m-2"
 				>
-					<Icon class="text-2xl" icon="majesticons:logout-line" />
+					<Fa class="text-xl" icon={faSignOut} />
 				</button>
 			</div>
 		{/if}

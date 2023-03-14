@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import Icon from '@iconify/svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import type { RTEvent } from '$lib/types';
 	import { invalidateAll, goto } from '$app/navigation';
 	import { createRoom, deleteRoom } from '$lib/api';
+	import Fa from 'svelte-fa';
+	import { faCirclePlay, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 	export let data: PageData;
 
@@ -99,16 +100,13 @@
 								{#each rooms as room}
 									<tr>
 										<td>{room.id}</td>
-										<td>
+										<td class="flex flex-row justify-center items-center text-center gap-2">
 											<button on:click={() => joinRoom(room.id)}>
-												<Icon
-													class="text-2xl mx-1 hover:text-pink-500"
-													icon="majesticons:door-enter-line"
-												/>
+												<Fa class="text-xl mx-1 hover:text-pink-500" icon={faCirclePlay} />
 											</button>
 
 											<button on:click={() => deleteRoom(room.id)}>
-												<Icon class="text-2xl mx-1 hover:text-pink-500" icon="octicon:trash-16" />
+												<Fa class="text-xl mx-1 hover:text-pink-500" icon={faTrashCan} />
 											</button>
 										</td>
 									</tr>

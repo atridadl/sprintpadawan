@@ -10,12 +10,13 @@
 		type ModalComponent
 	} from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
-	import Icon from '@iconify/svelte';
 	import { version } from '$app/environment';
 	import { Modal, modalStore } from '@skeletonlabs/skeleton';
 	import ProfileModal from '$lib/components/ProfileModal.svelte';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
 
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -66,7 +67,8 @@
 						/>
 					{:else}
 						<a href="/" class="btn hover:text-pink-500 text-lg" data-sveltekit-preload-data="hover">
-							<Icon icon="material-symbols:arrow-back-rounded" /> Back
+							<Fa icon={faChevronLeft} />
+							Back
 						</a>
 					{/if}
 				{/if}

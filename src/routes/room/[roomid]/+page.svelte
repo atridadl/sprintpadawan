@@ -6,9 +6,19 @@
 	import { invalidateAll } from '$app/navigation';
 	import { PresenceSet } from '$lib/ably.client';
 	import { resetStory, setVote, updateStoryVisibility } from '$lib/api';
-	import Icon from '@iconify/svelte';
 	import type { Vote } from '@prisma/client';
 	import type { Types } from 'ably';
+	import Fa from 'svelte-fa';
+	import {
+		faCheckCircle,
+		faCopy,
+		faHourglass,
+		faShareSquare,
+		faEye,
+		faEyeSlash,
+		faSave
+	} from '@fortawesome/free-regular-svg-icons';
+	import { faBomb, faSkull } from '@fortawesome/free-solid-svg-icons';
 
 	export let data: PageData;
 
@@ -75,14 +85,11 @@
 			<h4>
 				Room ID: {room.id}
 				<button use:clipboard={window.location.href}>
-					<Icon
-						class="text-lg mx-1 hover:text-pink-500"
-						icon="material-symbols:content-copy-outline"
-					/>
+					<Fa class="text-lg mx-1 hover:text-pink-500" icon={faCopy} />
 				</button>
 
 				<button on:click={shareRoomUrlHandler}>
-					<Icon class="text-lg mx-1 hover:text-pink-500" icon="material-symbols:ios-share" />
+					<Fa class="text-lg mx-1 hover:text-pink-500" icon={faShareSquare} />
 				</button>
 			</h4>
 
@@ -102,18 +109,12 @@
 										{#if findVoteForCurrentUser(room.activeStory.votes, presenceItem)}
 											{findVoteForCurrentUser(room.activeStory.votes, presenceItem)?.value}
 										{:else}
-											<Icon class="text-2xl mx-1 inline-block" icon="tabler:error-404" />
+											<Fa class="text-xl mx-1 inline-block" icon={faSkull} />
 										{/if}
 									{:else if findVoteForCurrentUser(room.activeStory.votes, presenceItem)}
-										<Icon
-											class="text-2xl mx-1 inline-block"
-											icon="material-symbols:check-circle-outline"
-										/>
+										<Fa class="text-xl inline-block" icon={faCheckCircle} />
 									{:else}
-										<Icon
-											class="text-2xl mx-1 inline-block animate-spin"
-											icon="ic:round-hourglass-empty"
-										/>
+										<Fa class="text-xl mx-1 inline-block animate-spin" icon={faHourglass} />
 									{/if}
 								</span>
 							</li>
@@ -213,10 +214,10 @@
 						class="btn variant-filled-secondary m-2"
 					>
 						{#if room.activeStory.visible}
-							<Icon class="text-xl mr-2" icon="ph:eye-closed" />
+							<Fa class="text-lg mr-2" icon={faEyeSlash} />
 							Hide
 						{:else}
-							<Icon class="text-xl mr-2" icon="ph:eye" />
+							<Fa class="text-lg mr-2" icon={faEye} />
 							Show
 						{/if}
 					</button>
@@ -228,10 +229,10 @@
 						class="btn variant-filled-secondary m-2"
 					>
 						{#if storyTextBox === room.activeStory.name}
-							<Icon class="text-xl mr-2" icon="fa:bomb" />
+							<Fa class="text-lg mr-2" icon={faBomb} />
 							Reset Votes
 						{:else}
-							<Icon class="text-xl mr-2" icon="fluent:save-multiple-24-regular" />
+							<Fa class="text-lg mr-2" icon={faSave} />
 							Save Story
 						{/if}
 					</button>
