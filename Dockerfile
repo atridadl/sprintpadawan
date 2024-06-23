@@ -8,8 +8,7 @@ WORKDIR /app
 ENV NODE_ENV="production"
 
 # Install pnpm
-ARG PNPM_VERSION=8.9.2
-RUN npm install -g pnpm@$PNPM_VERSION
+RUN npm install -g pnpm
 
 
 # Throw-away build stage to reduce size of final image
@@ -27,7 +26,7 @@ RUN pnpm install --frozen-lockfile --prod=false
 COPY --link . .
 
 # Build application
-RUN pnpm run build
+RUN pnpm build
 
 # Remove development dependencies
 RUN pnpm prune --prod
@@ -40,4 +39,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "pnpm", "run", "start" ]
+CMD [ "pnpm", "start" ]

@@ -78,16 +78,17 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
         emitter.emit("nodes", "presence");
       });
 
-    // Initial fetch
+    // Initial fetch and event subscription
     emitter.on("presence", handler);
 
-    return function clear() {
+    return () => {
+      // Ensure immediate deletion upon disconnection
       db.delete(presence)
         .where(and(eq(presence.roomId, roomId), eq(presence.userId, userId)))
-        .returning()
-        .then(async () => {
+        .then(() => {
           emitter.emit("nodes", "presence");
         });
+
       emitter.off("presence", handler);
     };
   });
