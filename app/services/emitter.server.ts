@@ -1,17 +1,16 @@
+// @ts-nocheck
 import { EventEmitter } from "events";
 import "dotenv/config";
 
-let emitter: EventEmitter;
-
-declare global {
-  var __emitter: EventEmitter | undefined;
-}
+let emitter;
 
 if (process.env.NODE_ENV === "production") {
   emitter = new EventEmitter();
+  emitter.setMaxListeners(100);
 } else {
   if (!global.__emitter) {
     global.__emitter = new EventEmitter();
+    global.__emitter.setMaxListeners(100);
   }
   emitter = global.__emitter;
 }
